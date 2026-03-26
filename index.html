@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUSolar Rear Vision System — Week 1 Checkpoint</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1a; --card: #111827; --border: #1e293b;
+    --accent: #3b82f6; --accent-light: #60a5fa;
+    --green: #22c55e; --yellow: #eab308; --red: #ef4444;
+    --orange: #f97316; --purple: #a855f7;
+    --text: #e2e8f0; --text-muted: #94a3b8; --text-dim: #64748b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 700; margin: 8px 0 4px; }
+  h2 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: var(--accent-light); margin: 16px 0 8px; }
+  .subtitle { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .card p { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+  .header-bar { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 8px; box-shadow: 0 0 8px #22c55e66; }
+  .status-label { font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; font-size: 11px; font-family: inherit; background: transparent; color: var(--text-dim); border: 1px solid transparent; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+  .tab.active { background: #3b82f622; color: var(--accent-light); border-color: #3b82f644; font-weight: 600; }
+  .tab:hover:not(.active) { color: var(--text-muted); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Grids */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+
+  /* Spec cards */
+  .spec-card { padding: 12px; }
+  .spec-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .spec-value { font-size: 12px; font-weight: 500; }
+  .spec-card.green { border-left: 3px solid var(--green); }
+  .spec-card.yellow { border-left: 3px solid var(--yellow); }
+  .spec-card.red { border-left: 3px solid var(--red); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th { padding: 8px 6px; text-align: left; color: var(--text-dim); font-weight: 600; border-bottom: 1px solid var(--border); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  td { padding: 8px 6px; color: var(--text); border-bottom: 1px solid #1e293b22; }
+  .verdict { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; padding: 2px 6px; border-radius: 3px; }
+  .v-strong { background: #22c55e22; color: var(--green); }
+  .v-baseline { background: #eab30822; color: var(--yellow); }
+  .v-sponsored { background: #a855f722; color: var(--purple); }
+  .v-content { background: #ef444422; color: var(--red); }
+
+  /* Finding cards */
+  .finding { border-left: 3px solid; padding: 12px 16px; }
+  .finding-title { font-size: 11px; font-weight: 600; margin-bottom: 4px; }
+  .finding-desc { font-size: 11px; color: var(--text-muted); }
+
+  /* Value bars */
+  .value-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .value-label { width: 110px; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+  .value-track { flex: 1; height: 20px; background: var(--border); border-radius: 10px; overflow: hidden; }
+  .value-fill { height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .value-fill span { font-size: 10px; font-weight: 700; color: #fff; }
+  .value-cost { width: 60px; font-size: 10px; color: var(--text-dim); text-align: right; }
+
+  /* Timeline */
+  .week-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .badge { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; padding: 3px 8px; border-radius: 4px; }
+  .badge-active { background: #1e3a5f; color: var(--accent-light); }
+  .badge-upcoming { background: #1a1a2e; color: var(--text-dim); }
+  .task { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+  .checkbox { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid var(--text-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 9px; }
+  .checkbox.done { border-color: var(--green); background: #22c55e22; color: var(--green); }
+  .task-text { font-size: 11px; }
+  .task-text.done { color: var(--text-muted); text-decoration: line-through; }
+  .progress-bar { margin-top: 8px; padding: 6px 10px; background: #3b82f611; border-radius: 4px; font-size: 10px; color: var(--accent-light); }
+
+  /* Sponsorship */
+  .sponsor-card { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+  .sponsor-value { font-size: 13px; font-weight: 700; color: var(--accent-light); }
+
+  /* Milestone */
+  .milestone { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .milestone:last-child { border-bottom: none; }
+  .milestone-date { width: 120px; font-size: 10px; color: var(--text-dim); font-weight: 600; flex-shrink: 0; }
+  .milestone-text { font-size: 11px; flex: 1; }
+  .milestone-status { font-size: 9px; font-weight: 600; }
+
+  /* Open items */
+  .priority { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .p-high { background: #ef444422; color: var(--red); }
+  .p-med { background: #eab30822; color: var(--yellow); }
+  .p-low { background: #64748b22; color: var(--text-dim); }
+
+  /* Bottom line box */
+  .bottom-line { border: 1px solid #3b82f644; background: #3b82f608; border-radius: 8px; padding: 16px; }
+  .bottom-line p { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* Chart containers */
+  .chart-container { position: relative; max-width: 100%; margin: 0 auto; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .chart-row { grid-template-columns: 1fr; } }
+
+  /* Architecture items */
+  .arch-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .arch-item:last-child { border-bottom: none; }
+  .arch-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .arch-name { font-size: 12px; font-weight: 600; }
+  .arch-desc { font-size: 11px; color: var(--text-dim); }
+
+  .footer { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border); text-align: center; font-size: 9px; color: var(--text-dim); }
+
+  /* Callout */
+  .callout { border-left: 3px solid var(--yellow); padding: 12px 16px; background: var(--card); border-radius: 0 8px 8px 0; margin-bottom: 12px; }
+  .callout p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .callout strong { color: var(--text); }
+
+  /* Checklist items */
+  .check-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #1e293b22; }
+  .check-item:last-child { border-bottom: none; }
+  .check-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* Decision items */
+  .decision { display: flex; align-items: center; gap: 8px; padding: 8px 10px; }
+  .decision-q { font-size: 12px; color: var(--yellow); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-bar">
+  <div><span class="status-dot"></span><span class="status-label">Week 1 — In Progress</span></div>
+  <h1>NUSolar Rear Vision System</h1>
+  <p style="font-size:12px;color:var(--text-muted)">Real-time rear-vision camera + display for ASC 2026 · Section 9.7.E compliance · Led by Spencer Kogoma</p>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overview')">Overview</button>
+  <button class="tab" onclick="showTab('options')">Camera Options</button>
+  <button class="tab" onclick="showTab('cost')">Cost/Benefit</button>
+  <button class="tab" onclick="showTab('timeline')">Timeline</button>
+  <button class="tab" onclick="showTab('sponsorship')">Sponsorship</button>
+  <button class="tab" onclick="showTab('unknowns')">Open Items</button>
+</div>
+
+<!-- ═══ OVERVIEW TAB ═══ -->
+<div id="overview" class="tab-content active">
+  <h2>Project Summary</h2>
+  <div class="card">
+    <p>Design and build a real-time rear-vision camera and display system for the NUSolar car that passes ASC 2026 Section 9.7.E scrutineering. Must provide always-on, mirror-image, low-latency rear view. Driver tested on identifying arrow direction at 15m.</p>
+  </div>
+
+  <h2>Regulation Requirements (9.7.E)</h2>
+  <div class="grid-3">
+    <div class="card spec-card"><div class="spec-label">Rear Visibility</div><div class="spec-value">15m behind, 30° off-center</div></div>
+    <div class="card spec-card"><div class="spec-label">Image Type</div><div class="spec-value">Reflex (mirror-like)</div></div>
+    <div class="card spec-card"><div class="spec-label">Operation</div><div class="spec-value">Always-on, no driver input</div></div>
+    <div class="card spec-card"><div class="spec-label">Arrow Test</div><div class="spec-value">200mm stroke, 1m² board, 15m</div></div>
+    <div class="card spec-card"><div class="spec-label">Mounting</div><div class="spec-value">Fixed, vibration-proof</div></div>
+    <div class="card spec-card"><div class="spec-label">Screen Position</div><div class="spec-value">Visible from driver seat</div></div>
+  </div>
+
+  <h2>Derived Technical Requirements</h2>
+  <div class="grid-2">
+    <div class="card spec-card green"><div class="spec-label">Min. FOV</div><div class="spec-value">≥60° horizontal</div></div>
+    <div class="card spec-card green"><div class="spec-label">Frame Rate</div><div class="spec-value">60 fps target</div></div>
+    <div class="card spec-card green"><div class="spec-label">Latency</div><div class="spec-value">&lt;100ms glass-to-glass</div></div>
+    <div class="card spec-card green"><div class="spec-label">Resolution</div><div class="spec-value">≥720p (1080p preferred)</div></div>
+    <div class="card spec-card green"><div class="spec-label">Power</div><div class="spec-value">12V bus or 5V USB</div></div>
+    <div class="card spec-card green"><div class="spec-label">Cable Run</div><div class="spec-value">~3m to rear</div></div>
+    <div class="card spec-card green"><div class="spec-label">Pi Model</div><div class="spec-value">Raspberry Pi 4B</div></div>
+    <div class="card spec-card yellow"><div class="spec-label">Environment</div><div class="spec-value">High EMI near motors</div></div>
+    <div class="card spec-card green"><div class="spec-label">Display</div><div class="spec-value">My scope (7" HDMI)</div></div>
+  </div>
+
+  <h2>System Architecture — Open Decision</h2>
+  <div class="card">
+    <p style="margin-bottom:8px">Pi is available but not required. Four viable approaches identified:</p>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--accent)"></div><div><div class="arch-name">Pi-Mediated (USB)</div><div class="arch-desc">USB camera → Pi 4B → HDMI display. Most flexible, software mirror flip.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--yellow)"></div><div><div class="arch-name">Pi-Mediated (CSI)</div><div class="arch-desc">CSI camera → Pi 4B → HDMI display. Lowest Pi latency, but 3m cable too long for ribbon.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--orange)"></div><div><div class="arch-name">Direct Analog (AHD)</div><div class="arch-desc">AHD camera → wire → dedicated monitor. Simplest, lowest latency, no Pi.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--purple)"></div><div><div class="arch-name">Action Camera HDMI</div><div class="arch-desc">GoPro/Insta360 → HDMI direct or via Pi → display. Best quality, highest cost.</div></div></div>
+  </div>
+
+  <h2>FPGA Considered & Ruled Out</h2>
+  <div class="callout">
+    <p>Considered using an FPGA for lowest-possible latency (&lt;10ms). Shannon said "design complexity is significantly higher — I'll let you figure out if the benefits for latency + quality are better." After analysis: Mach XO3L lacks resources for video. A capable FPGA board would cost $100-250+ and require weeks of HDL development beyond current skill level. Pi path achieves 50-80ms which is sufficient for rear-view at highway speeds. <strong>Decision: Pi for now, FPGA as documented future upgrade path.</strong></p>
+  </div>
+</div>
+
+<!-- ═══ CAMERA OPTIONS TAB ═══ -->
+<div id="options" class="tab-content">
+  <h2>Full Options Comparison</h2>
+  <p class="subtitle">All options verified against ASC 2026 9.7.E requirements and car constraints</p>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Option</th><th>Architecture</th><th>FPS</th><th>FOV</th><th>Latency</th><th>Quality</th><th>Cost</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">AHD Backup Kit</td><td style="color:var(--text-muted);font-size:10px">Camera → AHD → Monitor</td><td>25-30</td><td>120-170°</td><td>&lt;50ms</td><td>OK</td><td>$40-80</td><td><span class="verdict v-baseline">BASELINE</span></td></tr>
+        <tr><td style="font-weight:600">ELP OV4689 + Pi</td><td style="color:var(--text-muted);font-size:10px">USB → Pi 4B → HDMI</td><td>60 @1080p</td><td>100°D / ~85°H</td><td>55-65ms</td><td>Good</td><td>$95-120</td><td><span class="verdict v-strong">STRONG</span></td></tr>
+        <tr><td style="font-weight:600">Arducam B0497 + Pi</td><td style="color:var(--text-muted);font-size:10px">USB3 → Pi 4B → HDMI</td><td>60+ @1080p?</td><td>100°D / ~85°H</td><td>50-65ms</td><td>Excellent</td><td>$120-150</td><td><span class="verdict v-strong">STRONG</span></td></tr>
+        <tr><td style="font-weight:600">GoPro Hero 13</td><td style="color:var(--text-muted);font-size:10px">HDMI → display (or Pi)</td><td>60 @1080p</td><td>~120° Wide</td><td>33-50ms</td><td>Excellent</td><td>$480+</td><td><span class="verdict v-sponsored">IF SPONSORED</span></td></tr>
+        <tr><td style="font-weight:600">Insta360 X5</td><td style="color:var(--text-muted);font-size:10px">360 → Pi crop → display</td><td>30 (webcam)</td><td>360°</td><td>100-200+ms</td><td>Overkill</td><td>$550+</td><td><span class="verdict v-content">CONTENT ONLY</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Performance Radar</h2>
+  <p class="subtitle">Higher is better for each metric (1-10 scale)</p>
+  <div class="card">
+    <div class="chart-container" style="max-height:400px">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+  <h2>Key Findings</h2>
+  <div class="card finding" style="border-color:var(--green)"><div class="finding-title" style="color:var(--green)">ELP & Arducam are the strongest options</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. Arducam has better sensor (STARVIS 2) but slightly more expensive. ELP is proven and cheaper.</div></div>
+  <div class="card finding" style="border-color:var(--yellow)"><div class="finding-title" style="color:var(--yellow)">AHD kit is the safe fallback</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
+  <div class="card finding" style="border-color:var(--purple)"><div class="finding-title" style="color:var(--purple)">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output checks out (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
+  <div class="card finding" style="border-color:var(--red)"><div class="finding-title" style="color:var(--red)">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode = 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursue for content creation only.</div></div>
+</div>
+
+<!-- ═══ COST/BENEFIT TAB ═══ -->
+<div id="cost" class="tab-content">
+  <h2>Cost Comparison</h2>
+  <p class="subtitle">Total system cost including display (if separate)</p>
+  <div class="card">
+    <div class="chart-container" style="max-height:300px">
+      <canvas id="costChart"></canvas>
+    </div>
+  </div>
+
+  <h2>Value Score</h2>
+  <p class="subtitle">Performance per dollar (higher = better value, scale 1-10)</p>
+  <div class="card">
+    <div class="value-row"><div class="value-label">AHD Kit</div><div class="value-track"><div class="value-fill" style="width:72%;background:var(--orange)"><span>7.2</span></div></div><div class="value-cost">$40-80</div></div>
+    <div class="value-row"><div class="value-label">ELP OV4689</div><div class="value-track"><div class="value-fill" style="width:88%;background:var(--accent)"><span>8.8</span></div></div><div class="value-cost">$95-120</div></div>
+    <div class="value-row"><div class="value-label">Arducam B0497</div><div class="value-track"><div class="value-fill" style="width:84%;background:var(--green)"><span>8.4</span></div></div><div class="value-cost">$120-150</div></div>
+    <div class="value-row"><div class="value-label">GoPro Hero 13</div><div class="value-track"><div class="value-fill" style="width:52%;background:var(--purple)"><span>5.2</span></div></div><div class="value-cost">$480+</div></div>
+    <div class="value-row"><div class="value-label">Insta360 X5</div><div class="value-track"><div class="value-fill" style="width:21%;background:var(--red)"><span>2.1</span></div></div><div class="value-cost">$550+</div></div>
+  </div>
+
+  <h2>Bottom Line for Shannon</h2>
+  <div class="bottom-line">
+    <p><strong>Primary recommendation: ELP OV4689 or Arducam B0497 + Pi 4B + Waveshare display.</strong> Both deliver 60fps, 100° FOV, regulation compliance, and total system cost under $150. ELP is the safer, cheaper bet ($95-120). Arducam has a superior sensor if the B0497 confirms 60fps at 1080p ($120-150). Sponsorship responses may change the calculus — if GoPro comes through, that becomes a viable upgrade. But the primary plan should not depend on sponsorship.</p>
+  </div>
+</div>
+
+<!-- ═══ TIMELINE TAB ═══ -->
+<div id="timeline" class="tab-content">
+  <h2>3-Week Project Timeline</h2>
+
+  <div class="card">
+    <div class="week-header"><div><span style="font-size:14px;font-weight:700">Week 1:</span> <span style="color:var(--text-muted)">Research & Outreach</span></div><span class="badge badge-active">IN PROGRESS</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Set up Notion documentation</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Research camera options (4 approaches identified)</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Draft all sponsorship emails (6 emails, 5 companies)</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Confirm Pi model (Pi 4B)</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Confirm display is my scope</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Send sponsorship emails</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Message Ethan for past emails</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Find out old camera setup details</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Look at back of car mounting</span></div>
+    <div class="progress-bar">Progress: 5/9 tasks complete (56%)</div>
+  </div>
+
+  <div class="card">
+    <div class="week-header"><div><span style="font-size:14px;font-weight:700">Week 2:</span> <span style="color:var(--text-muted)">Options → Shannon</span></div><span class="badge badge-upcoming">UPCOMING</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Present options analysis to Shannon</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Get Shannon's decision on final option</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Order selected parts</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Begin bench testing if parts arrive</span></div>
+  </div>
+
+  <div class="card">
+    <div class="week-header"><div><span style="font-size:14px;font-weight:700">Week 3:</span> <span style="color:var(--text-muted)">Build & Test</span></div><span class="badge badge-upcoming">UPCOMING</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Vehicle integration + mounting</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">15m arrow test (scrutineering simulation)</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Vibration + EMI testing</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Final documentation + handoff notes</span></div>
+  </div>
+
+  <h2>Key Milestones</h2>
+  <div class="card">
+    <div class="milestone"><div class="milestone-date">End of Week 1</div><div class="milestone-text">Sponsorship emails sent. Options documented.</div><div class="milestone-status" style="color:var(--yellow)">→ TOMORROW</div></div>
+    <div class="milestone"><div class="milestone-date">Start of Week 2</div><div class="milestone-text">Options analysis presented to Shannon with recommendation.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
+    <div class="milestone"><div class="milestone-date">Mid Week 2</div><div class="milestone-text">Parts ordered. Bench testing begins.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
+    <div class="milestone"><div class="milestone-date">End of Week 3</div><div class="milestone-text">System installed, tested, documented on car.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
+  </div>
+</div>
+
+<!-- ═══ SPONSORSHIP TAB ═══ -->
+<div id="sponsorship" class="tab-content">
+  <h2>Sponsorship Outreach Tracker</h2>
+  <p class="subtitle">6 emails to 5 companies — ready to send tomorrow 8-10 AM Central</p>
+
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Insta360</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">X5 + camera consultation</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">insta360.com/contact + Think Bold Fund</div></div><div style="text-align:right"><div class="sponsor-value">$550</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Ms. Lizzy Liu)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@elpcctv.com</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Sales Team)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">ailipu_sales5@elpcctv.com</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Arducam</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">B0497 (IMX678 STARVIS 2, USB 3.0, 100°D)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">support@arducam.com</div></div><div style="text-align:right"><div class="sponsor-value">$70-80</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Waveshare</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">7" HDMI LCD (H) w/ case (1024×600 IPS)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@waveshare.com</div></div><div style="text-align:right"><div class="sponsor-value">$50-55</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">GoPro</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Hero 13 Black + Media Mod</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">gopro.com/connect + gopro.com/sponsorship</div></div><div style="text-align:right"><div class="sponsor-value">$480</div><span class="verdict v-baseline">DRAFT READY</span></div></div></div>
+
+  <h2>Pre-Send Checklist</h2>
+  <div class="card">
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">Send from personal email</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">CC solar@u.northwestern.edu on ALL emails</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">All emails include "sponsorship or discount" fallback language</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">All emails specify exact product models verified against regs</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">Insta360: also apply to Think Bold Fund (+ Dillo Day content angle)</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">GoPro: also submit via gopro.com/sponsorship</span></div>
+  </div>
+</div>
+
+<!-- ═══ OPEN ITEMS TAB ═══ -->
+<div id="unknowns" class="tab-content">
+  <h2>Still Need To Find Out</h2>
+  <div class="card finding" style="border-color:var(--yellow)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">What the old backup camera system looked like</div><div class="finding-desc">Ask team · Defines what "better" means for Shannon</div></div><span class="priority p-med">MED</span></div></div>
+  <div class="card finding" style="border-color:var(--yellow)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Past sponsorship emails from Ethan</div><div class="finding-desc">Ask Ethan · Tone reference (but Shannon said send as-is)</div></div><span class="priority p-med">MED</span></div></div>
+  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Physical mounting situation at back of car</div><div class="finding-desc">Go look · Determines enclosure design, cable routing, vibration concerns</div></div><span class="priority p-high">HIGH</span></div></div>
+  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Arducam B0497 actual 1080p frame rate</div><div class="finding-desc">Ask Arducam (in email) · Need to confirm 60fps@1080p for final recommendation</div></div><span class="priority p-high">HIGH</span></div></div>
+  <div class="card finding" style="border-color:var(--text-dim)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">GoPro Hero 13 always-on HDMI behavior</div><div class="finding-desc">Test or ask GoPro · Only matters if sponsored</div></div><span class="priority p-low">LOW</span></div></div>
+
+  <h2>Decisions Still Needed</h2>
+  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Final camera selection (pending Shannon review of options)</span></div>
+  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Whether to use Pi in the pipeline or go direct camera-to-display</span></div>
+  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Display: Waveshare 7" or something the team already has?</span></div>
+  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Mount design for rear of car (need to see the car first)</span></div>
+  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Whether FPGA upgrade path is worth documenting in detail</span></div>
+</div>
+
+<!-- Footer -->
+<div class="footer">NUSolar Rear Vision System · Project Lead: Spencer Kogoma · Last Updated: March 26, 2026 · Week 1 Checkpoint</div>
+
+<script>
+// Tab switching
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  // Init charts if switching to those tabs
+  if (id === 'options') initRadar();
+  if (id === 'cost') initCost();
+}
+
+// Radar Chart
+let radarInit = false;
+function initRadar() {
+  if (radarInit) return; radarInit = true;
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Image Quality', 'Frame Rate', 'Low Latency', 'Low Cost', 'FOV', '3-Wk Feasibility', 'Pi Compatible', 'EMI Resilience'],
+      datasets: [
+        { label: 'ELP OV4689', data: [7,9,7,8,8,9,9,7], borderColor: '#3b82f6', backgroundColor: '#3b82f618', borderWidth: 2, pointRadius: 3 },
+        { label: 'Arducam B0497', data: [9,8,7,7,8,8,9,7], borderColor: '#22c55e', backgroundColor: '#22c55e18', borderWidth: 2, pointRadius: 3 },
+        { label: 'AHD Kit', data: [4,4,9,10,9,10,2,5], borderColor: '#f97316', backgroundColor: '#f9731610', borderWidth: 1.5, pointRadius: 2 },
+        { label: 'GoPro Hero 13', data: [9,9,7,3,9,6,5,8], borderColor: '#a855f7', backgroundColor: '#a855f710', borderWidth: 1.5, pointRadius: 2 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, color: '#64748b', font: { size: 9 } }, grid: { color: '#1e293b' }, pointLabels: { color: '#94a3b8', font: { size: 10 } } } },
+      plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 }, usePointStyle: true, pointStyle: 'circle' } } }
+    }
+  });
+}
+
+// Cost Chart
+let costInit = false;
+function initCost() {
+  if (costInit) return; costInit = true;
+  const ctx = document.getElementById('costChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['AHD Kit', 'ELP OV4689', 'Arducam B0497', 'GoPro Hero 13', 'Insta360 X5'],
+      datasets: [{ data: [50, 120, 130, 480, 550], backgroundColor: ['#f97316', '#3b82f6', '#22c55e', '#a855f7', '#ef4444'], borderRadius: 4, barThickness: 28 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: true,
+      scales: { x: { ticks: { color: '#64748b', font: { size: 10 }, callback: v => '$' + v }, grid: { color: '#1e293b22' } }, y: { ticks: { color: '#94a3b8', font: { size: 11 } }, grid: { display: false } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.x } } }
+    }
+  });
+}
+</script>
+</body>
+</html>
