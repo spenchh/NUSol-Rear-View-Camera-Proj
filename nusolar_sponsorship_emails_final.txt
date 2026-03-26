@@ -1,0 +1,270 @@
+═══════════════════════════════════════════════════════════════════
+NUSOLAR REAR VISION SYSTEM — FINAL SPONSORSHIP EMAILS
+Prepared: March 26, 2026
+Send: Tomorrow morning, 8-10 AM Central
+Send from: Your personal email
+CC: solar@u.northwestern.edu on ALL emails
+═══════════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 1: INSTA360
+Send to: Contact form at insta360.com/contact (select "Partnership")
+Also apply to: insta360.com/ThinkBoldFund
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)
+
+Dear Insta360 Partnerships Team,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for camera systems on NUSolar, our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 — a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
+
+We have two camera needs for our car, and I'd love to explore whether Insta360 could help with either or both:
+
+1. Real-time rear-vision safety system — Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate, and strong dynamic range. I've been looking at your product lineup and would welcome your team's input on whether any Insta360 cameras — such as the Ace Pro 2, Link series, or another product — could support real-time, low-latency video output for this kind of embedded application.
+
+2. Race-day 360° content — Separately, we'd love to mount an X5 on the car to capture immersive footage during the race. A solar car crossing the country feels like a natural fit for the kind of content Insta360 is known for, and we'd be excited to share it across our social media channels.
+
+We're reaching out to see if Insta360 would be open to supporting our team through a product sponsorship. If a full sponsorship isn't possible, we would also greatly appreciate a discounted partnership or any level of product support. In return, we can offer:
+
+• Insta360 logo placement on the solar car body (visible in all race media)
+• Branding on team t-shirts and pit crew apparel
+• Social media posts and race-day content featuring Insta360 products
+• Exposure at a national-level STEM competition with strong engineering community reach
+
+Even if the rear-vision application isn't a fit for your current lineup, we'd still love to partner on the content side. Would someone on your team be available to discuss this?
+
+Thank you for your time.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 2: ELP — Ms. Lizzy Liu
+Send to: sales@elpcctv.com
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026
+
+Dear Ms. Liu,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between ELP and NUSolar, our university's solar car racing team.
+
+I have been following ELP's advancements in high-speed USB camera modules, particularly the OV4689-based boards, and believe our upcoming project is the perfect platform to showcase your technology in a real-world embedded engineering application.
+
+About the Project:
+NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. Our system requires a USB camera with 60+ fps at 1080p, wide-angle FOV with no distortion, low latency, and compatibility with a Raspberry Pi 4B. After looking through your products, we've found the ELP-USBFHD08S-LC1100 (100° no-distortion lens) as the best technical fit for our application. Its ~85° horizontal FOV, distortion-free image, and high frame rate meet all of our competition safety regulations.
+
+How We Will Promote ELP:
+• Featuring the ELP camera in race-day social media content with direct links to your product pages
+• Showcasing the camera's performance in a real-time embedded vision system on a solar-powered vehicle
+• ELP logo placement on the solar car body and team apparel, visible in all race media coverage
+• Technical write-up documenting how ELP hardware was integrated into our system, shareable by your team for marketing
+
+What We Are Requesting:
+We are looking for sponsorship in the form of 1–2x ELP-USBFHD08S-LC1100 camera modules (OV4689, 100° no-distortion lens) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
+
+We admire ELP's commitment to providing cost-effective, high-quality USB camera solutions for embedded and industrial applications, and would be honored to partner together. Thank you for considering this proposal.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 3: ELP — Sales Team
+Send to: ailipu_sales5@elpcctv.com
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026
+
+Dear ELP Sales Team,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between ELP and NUSolar, our university's solar car racing team.
+
+I have been following ELP's advancements in high-speed USB camera modules, particularly the OV4689-based boards, and believe our upcoming project is the perfect platform to showcase your technology in a real-world embedded engineering application.
+
+About the Project:
+NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. Our system requires a USB camera with 60+ fps at 1080p, wide-angle FOV with no distortion, low latency, and compatibility with a Raspberry Pi 4B. After looking through your products, we've found the ELP-USBFHD08S-LC1100 (100° no-distortion lens) as the best technical fit for our application. Its ~85° horizontal FOV, distortion-free image, and high frame rate meet all of our competition safety regulations.
+
+How We Will Promote ELP:
+• Featuring the ELP camera in race-day social media content with direct links to your product pages
+• Showcasing the camera's performance in a real-time embedded vision system on a solar-powered vehicle
+• ELP logo placement on the solar car body and team apparel, visible in all race media coverage
+• Technical write-up documenting how ELP hardware was integrated into our system, shareable by your team for marketing
+
+What We Are Requesting:
+We are looking for sponsorship in the form of 1–2x ELP-USBFHD08S-LC1100 camera modules (OV4689, 100° no-distortion lens) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
+
+We admire ELP's commitment to providing cost-effective, high-quality USB camera solutions for embedded and industrial applications, and would be honored to partner together. Thank you for considering this proposal.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 4: ARDUCAM
+Send to: support@arducam.com (or arducam.com/contact-form)
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Proposal: NUSolar x Arducam — Raspberry Pi Rear-Vision System for ASC 2026
+
+Dear Arducam Team,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Arducam and NUSolar, our university's solar car racing team.
+
+Arducam's focus on Raspberry Pi-compatible embedded camera solutions is a natural fit for our project, and I believe this is a great opportunity to showcase your technology in a real-world engineering application.
+
+About the Project:
+NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 — a national cross-country solar-powered car race. The system requires:
+
+• 60+ fps at 1080p for smooth real-time video
+• Wide-angle FOV (≥60° horizontal) to meet competition safety regulations
+• Strong low-light and wide dynamic range performance for varying outdoor conditions
+• USB interface compatible with Raspberry Pi 4B (3m cable run rules out CSI)
+• Compact form factor for rear-vehicle mounting
+
+After evaluating your product line, we've identified the Arducam B0497 (8.3MP IMX678 STARVIS 2 USB 3.0 camera module with 100°D M12 lens) as a strong candidate. Its STARVIS 2 sensor, wide-angle lens, USB 3.0 high-speed connectivity, and Pi compatibility align well with our requirements. I'd welcome your team's input on whether the B0497 can sustain 60fps at 1080p, and whether you'd recommend a different model if it's a better fit for a real-time, low-latency video application.
+
+How We Will Promote Arducam:
+• Featuring the Arducam camera in race-day social media content with links to your product pages
+• Showcasing Arducam hardware in a Pi-based embedded vision system on a solar-powered vehicle
+• Arducam logo placement on the solar car body and team apparel, visible in all race media coverage
+• Technical write-up documenting how Arducam hardware was integrated into our Pi 4B system, shareable for your marketing and developer community
+
+What We Are Requesting:
+We are looking for sponsorship in the form of 1–2x Arducam B0497 camera modules (or a similar recommended product) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
+
+We admire Arducam's commitment to the Raspberry Pi and embedded vision community, and would be honored to partner together. Thank you for considering this proposal.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 5: WAVESHARE
+Send to: sales@waveshare.com
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Proposal: NUSolar x Waveshare Display — Raspberry Pi Rear-Vision System for ASC 2026
+
+Dear Waveshare Sales Team,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Waveshare and NUSolar, our university's solar car racing team.
+
+Waveshare's reputation for high-quality Raspberry Pi displays and commitment to the developer community make this a natural fit for our project.
+
+About the Project:
+NUSolar is building a real-time rear-vision camera and display system for our solar car ahead of the American Solar Challenge 2026 — a national cross-country solar-powered car race. The system pairs a USB camera with a Raspberry Pi 4B, which outputs the live rear-view feed over HDMI to a dashboard-mounted display for the driver.
+
+Our display requirements:
+• 7" HDMI IPS panel for wide viewing angles (driver must see screen from normal seating position per competition regulation 9.7.E.3)
+• Rigid, durable construction for vehicle mounting — must withstand road vibration without shifting (competition regulation 9.7.E.2)
+• 1024×600 or higher resolution for clear image detail
+• 5V power input compatible with Raspberry Pi 4B
+• Pi 4B driver-free compatibility
+
+After evaluating your product line, we've identified the Waveshare 7inch HDMI LCD (H) with case as the best fit. Its IPS panel, toughened glass (6H hardness), rigid case, and driver-free Pi 4B compatibility meet all of our competition and vehicle requirements.
+
+How We Will Promote Waveshare:
+• Featuring the Waveshare display in race-day social media content with links to your product pages
+• Showcasing Waveshare hardware as the driver's real-time rearview display on a solar-powered vehicle
+• Waveshare logo placement on the solar car body and team apparel, visible in all race media coverage
+• Technical write-up documenting the Pi 4B + Waveshare display integration, shareable for your developer community and marketing
+
+What We Are Requesting:
+We are looking for sponsorship in the form of 1x Waveshare 7inch HDMI LCD (H) with case (1024×600, IPS, toughened glass) to serve as the driver's rear-vision display. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
+
+We admire Waveshare's commitment to making innovation easier for developers and engineers, and would be honored to partner together. Thank you for considering this proposal.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+EMAIL 6: GOPRO
+Send to: Web form at gopro.com/connect (select "Partnership")
+Also apply to: gopro.com/sponsorship
+═══════════════════════════════════════════════════════════════════
+
+Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)
+
+Dear GoPro Partnerships Team,
+
+My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for the camera systems on NUSolar, our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 — a cross-country solar-powered car race that brings together top engineering programs from across the country and generates significant media coverage.
+
+We have two camera needs for our car, and I'd love to explore whether GoPro could help with either or both:
+
+1. Real-time rear-vision safety system — Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate (60 fps), and reliable HDMI output. After researching GoPro's product line, the Hero 13 Black stands out — its 1080p@60fps HDMI output in idle/preview mode with low latency (stabilization off) is well-suited for a real-time rear-view application. We would also need a Media Mod for HDMI access. I'd welcome your team's input on whether this use case is a good fit for the Hero 13 or if you'd recommend a different model.
+
+2. Race-day content — A GoPro mounted on a solar car racing across the country is exactly the kind of adventure content GoPro is known for. We'd love to capture and share action footage throughout the competition on our social media channels.
+
+We're reaching out to see if GoPro would be open to supporting our team through a product sponsorship. If a full sponsorship isn't possible, we would also greatly appreciate a discounted partnership, student pricing, or any level of product support. In return, we can offer:
+
+• GoPro logo placement on the solar car body (visible in all race media)
+• Branding on team t-shirts and pit crew apparel
+• Social media posts and race-day content captured with GoPro
+• Exposure at a national-level STEM competition with strong engineering community reach
+
+Would someone on your team be available to discuss this?
+
+Thank you for your time.
+
+Best regards,
+Spencer Kogoma
+
+--
+Spencer Kogoma
+B.S. Computer Engineering & B.M. String Performance
+Northwestern University | McCormick & Bienen Schools
+spencerkogoma2029@u.northwestern.edu | (341)221-0193
+
+
+═══════════════════════════════════════════════════════════════════
+COMPLETE SEND LIST SUMMARY
+═══════════════════════════════════════════════════════════════════
+
+#  | Company      | Send To                              | Product                                              | Retail Value
+---|-------------|--------------------------------------|------------------------------------------------------|-------------
+1  | Insta360     | insta360.com/contact (Partnership)   | X5 + camera consultation                             | ~$550
+   |              | + insta360.com/ThinkBoldFund          |                                                      |
+2  | ELP          | sales@elpcctv.com (Ms. Lizzy Liu)    | 1-2x ELP-USBFHD08S-LC1100 (OV4689, 100° ND)        | ~$70 each
+3  | ELP          | ailipu_sales5@elpcctv.com (Sales)    | Same as #2                                           | Same
+4  | Arducam      | support@arducam.com                  | 1-2x B0497 (IMX678 STARVIS 2, USB 3.0, 100°D)       | ~$70-80 each
+5  | Waveshare    | sales@waveshare.com                  | 1x 7" HDMI LCD (H) with case (1024×600 IPS)          | ~$50-55
+6  | GoPro        | gopro.com/connect (Partnership)      | Hero 13 Black + Media Mod                             | ~$480
+   |              | + gopro.com/sponsorship              |                                                      |
+
+TOTAL EMAILS: 6 (to 5 companies)
+REMEMBER: CC solar@u.northwestern.edu on ALL emails
+SEND TIME: Tomorrow 8-10 AM Central
