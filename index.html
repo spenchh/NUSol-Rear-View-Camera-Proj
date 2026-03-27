@@ -440,6 +440,13 @@ function showTab(id) {
   if (id === 'cost') initCost();
 }
 
+function toggleEmail(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('active');
+  }
+}
+
 // Radar Chart
 let radarInit = false;
 function initRadar() {
