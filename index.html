@@ -65,7 +65,49 @@
   border-radius: 3px; 
   letter-spacing: 0.8px; 
 }
+/* Fixes hint text size and color */
+.sponsor-expand-hint { 
+  font-size: 9px; 
+  color: var(--accent-light); 
+  margin-top: 6px; 
+  opacity: 0.7;
+}
 
+/* Formats the sent date at the top of the email */
+.email-sent-date { 
+  font-size: 9px; 
+  color: #3fb950; 
+  font-weight: 600;
+  margin-bottom: 4px; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Formats the Subject line */
+.email-subject { 
+  font-size: 11px; 
+  font-weight: 700; 
+  color: var(--text); 
+  margin-bottom: 12px; 
+  padding-bottom: 8px; 
+  border-bottom: 1px solid var(--border); 
+}
+
+/* The critical fix for your email body */
+.email-body { 
+  background: #080c14; 
+  padding: 14px; 
+  border-radius: 6px; 
+  font-size: 11px; /* Slightly larger for readability */
+  color: var(--text-muted); 
+  white-space: pre-wrap; /* THIS PRESERVES YOUR LINE BREAKS */
+  overflow-x: auto; 
+  border: 1px solid var(--border); 
+  line-height: 1.6; 
+  max-height: 400px; 
+  overflow-y: auto; 
+  font-family: 'JetBrains Mono', monospace;
+}
 /* Yellow for BASELINE status */
 .v-baseline { 
   background: rgba(234, 179, 8, 0.15); 
