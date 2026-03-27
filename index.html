@@ -622,12 +622,48 @@ function initRadar() {
     type: 'radar',
     data: {
       labels: ['Image Quality', 'Frame Rate', 'Low Latency', 'Low Cost', 'FOV', '3-Wk Feasibility', 'Pi Compatible', 'EMI Resilience'],
+      // Inside your initRadar() function
       datasets: [
-        { label: '★ Pi Cam 3 Wide', data: [8,8,9,8,10,9,10,6], borderColor: '#3fb950', backgroundColor: '#3fb95020', borderWidth: 2.5, pointRadius: 4 },
-        { label: 'ELP OV4689', data: [7,9,7,8,8,9,9,7], borderColor: '#3b82f6', backgroundColor: '#3b82f618', borderWidth: 2, pointRadius: 3 },
-        { label: 'Arducam B0497', data: [9,8,7,7,8,8,9,7], borderColor: '#22c55e', backgroundColor: '#22c55e18', borderWidth: 2, pointRadius: 3 },
-        { label: 'AHD Kit', data: [4,4,9,10,9,10,2,5], borderColor: '#f97316', backgroundColor: '#f9731610', borderWidth: 1.5, pointRadius: 2 },
-        { label: 'GoPro Hero 13', data: [9,9,7,3,9,6,5,8], borderColor: '#a855f7', backgroundColor: '#a855f710', borderWidth: 1.5, pointRadius: 2 },
+        { 
+          label: '★ Pi Cam 3 Wide', 
+          data: [8,8,9,8,10,9,10,6], 
+          borderColor: '#3fb950',        // Brighter green
+          backgroundColor: '#3fb95020',  // Subtle green fill
+          borderWidth: 2.5, 
+          pointRadius: 4 
+        },
+        { 
+          label: 'Arducam B0497', 
+          data: [9,8,7,7,8,8,9,7], 
+          borderColor: '#ffcc00',        // Gold / Dirty Yellow
+          backgroundColor: '#ffcc0015',  // Subtle gold fill
+          borderWidth: 2, 
+          pointRadius: 3 
+        },
+        { 
+          label: 'ELP OV4689', 
+          data: [7,9,7,8,8,9,9,7], 
+          borderColor: '#3b82f6',        // Blue
+          backgroundColor: '#3b82f610', 
+          borderWidth: 1.5, 
+          pointRadius: 2 
+        },
+        { 
+          label: 'AHD Kit', 
+          data: [4,4,9,10,9,10,2,5], 
+          borderColor: '#94a3b8',        // Muted Slate
+          backgroundColor: '#94a3b810', 
+          borderWidth: 1.5, 
+          pointRadius: 2 
+        },
+        { 
+          label: 'GoPro Hero 13', 
+          data: [9,9,7,3,9,6,5,8], 
+          borderColor: '#ef4444',        // Red
+          backgroundColor: '#ef444410', 
+          borderWidth: 1.5, 
+          pointRadius: 2 
+        }
       ]
     },
     options: {
