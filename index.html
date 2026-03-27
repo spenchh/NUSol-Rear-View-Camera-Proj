@@ -576,12 +576,12 @@ Spencer Kogoma</div>
 <!-- ═══ OPEN ITEMS TAB ═══ -->
 <div id="unknowns" class="tab-content">
   <h2>Still Need To Find Out</h2>
-  <div class="card finding" style="border-color:var(--yellow)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">What the old backup camera system looked like</div><div class="finding-desc">Ask Shannon · </div></div><span class="priority p-med">MED</span></div></div>
-  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Physical mounting situation at back of car</div><div class="finding-desc">Go look · Determines enclosure design, cable routing, vibration concerns</div></div><span class="priority p-high">HIGH</span></div></div>
-  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">CSI-to-HDMI extender reliability in high EMI environment</div><div class="finding-desc">Test near motors · If CSI extender drops frames near motor bay, fall back to USB camera (ELP or Arducam)</div></div><span class="priority p-high">HIGH</span></div></div>
-  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Arducam B0497 actual 1080p frame rate</div><div class="finding-desc">Ask Arducam (in email) · Need to confirm 60fps@1080p for fallback recommendation</div></div><span class="priority p-high">HIGH</span></div></div>
-  <div class="card finding" style="border-color:var(--text-dim)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">GoPro Hero 13 always-on HDMI behavior</div><div class="finding-desc">Test or ask GoPro · Only matters if sponsored</div></div><span class="priority p-low">LOW</span></div></div>
-
+  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Pi Camera Module 3 Wide + CSI Extender is the top recommendation</div><div class="finding-desc">Discovered during independent deep research — official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
+  <div class="card finding" style="border-color:#ffcc00"><div class="finding-title" style="color:#ffcc00">ELP & Arducam USB cameras remain strong alternatives</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. ELP OV4689 has proven 60fps@1080p reliability. Arducam B0497 has the best sensor (STARVIS 2) for low-light. Good fallbacks if CSI extender has EMI issues in the motor bay.</div></div>
+  <div class="card finding" style="border-color:#94a3b8"><div class="finding-title" style="color:#94a3b8">AHD kit is the safe fallback</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
+  <div class="card finding" style="border-color:#ef4444"><div class="finding-title" style="color:#ef4444">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output checks out (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
+  <div class="card finding" style="border-color:#64748b"><div class="finding-title" style="color:#64748b">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode = 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursue for content creation only.</div></div>
+  
   <h2>Decisions Still Needed</h2>
   <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Final camera selection (pending Shannon review of options)</span></div>
   <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Whether to use Pi in the pipeline or go direct camera-to-display</span></div>
@@ -688,7 +688,7 @@ function initCost() {
       datasets: [{
         label: 'Estimated System Cost ($)',
         data: [60, 108, 110, 135, 480, 550],
-        backgroundColor: ['#f97316', '#3fb950', '#3b82f6', '#22c55e', '#a855f7', '#ef4444'],
+        backgroundColor: ['#94a3b8', '#3fb950', '#3b82f6', '#ffcc00', '#ef4444', '#ef4444'],
         borderRadius: 4
       }]
     },
