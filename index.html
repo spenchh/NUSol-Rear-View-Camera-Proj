@@ -577,8 +577,35 @@ function initRadar() {
 }
 
 // Cost Chart
+// Cost Chart
 let costInit = false;
 function initCost() {
-  if (costInit) return; costInit = true;
+  if (costInit) return; 
+  costInit = true;
   const ctx = document.getElementById('costChart').getContext('2d');
   new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['AHD Kit', 'ELP OV4689', 'Arducam B0497', 'GoPro Hero 13', 'Insta360 X5'],
+      datasets: [{
+        label: 'Estimated System Cost ($)',
+        data: [60, 110, 135, 480, 550],
+        backgroundColor: ['#f97316', '#3b82f6', '#22c55e', '#a855f7', '#ef4444'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+        y: { grid: { display: false }, ticks: { color: '#e2e8f0' } }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+</script>
+</body>
+</html>
