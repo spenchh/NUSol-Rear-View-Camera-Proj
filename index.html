@@ -213,12 +213,12 @@
 
 <!-- Tabs -->
 <div class="tabs">
-  <button class="tab active" onclick="showTab('overview')">Overview</button>
-  <button class="tab" onclick="showTab('options')">Camera Options</button>
-  <button class="tab" onclick="showTab('cost')">Cost/Benefit</button>
-  <button class="tab" onclick="showTab('timeline')">Timeline</button>
-  <button class="tab" onclick="showTab('sponsorship')">Sponsorship</button>
-  <button class="tab" onclick="showTab('unknowns')">Open Items</button>
+  <button class="tab active" onclick="showTab('overview', this)">Overview</button>
+  <button class="tab" onclick="showTab('options', this)">Camera Options</button>
+  <button class="tab" onclick="showTab('cost', this)">Cost/Benefit</button>
+  <button class="tab" onclick="showTab('timeline', this)">Timeline</button>
+  <button class="tab" onclick="showTab('sponsorship', this)">Sponsorship</button>
+  <button class="tab" onclick="showTab('unknowns', this)">Open Items</button>
 </div>
 
 <!-- ═══ OVERVIEW TAB ═══ -->
@@ -595,11 +595,11 @@ Spencer Kogoma</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Tab switching
-function showTab(id) {
+function showTab(id, btn) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
   // Init charts if switching to those tabs
   if (id === 'options') initRadar();
   if (id === 'cost') initCost();
@@ -629,23 +629,23 @@ function initRadar() {
         { 
           label: '★ Pi Cam 3 Wide', 
           data: [8,8,9,8,10,9,10,6], 
-          borderColor: '#3fb950',        // Brighter green
-          backgroundColor: '#3fb95020',  // Subtle green fill
+          borderColor: '#3fb950',
+          backgroundColor: '#3fb95020',
           borderWidth: 2.5, 
           pointRadius: 4 
         },
         { 
           label: 'Arducam B0497', 
           data: [9,8,7,7,8,8,9,7], 
-          borderColor: '#ffcc00',        // Gold / Dirty Yellow
-          backgroundColor: '#ffcc0015',  // Subtle gold fill
+          borderColor: '#ffcc00',
+          backgroundColor: '#ffcc0015',
           borderWidth: 2, 
           pointRadius: 3 
         },
         { 
           label: 'ELP OV4689', 
           data: [7,9,7,8,8,9,9,7], 
-          borderColor: '#3b82f6',        // Blue
+          borderColor: '#3b82f6',
           backgroundColor: '#3b82f610', 
           borderWidth: 1.5, 
           pointRadius: 2 
@@ -653,7 +653,7 @@ function initRadar() {
         { 
           label: 'AHD Kit', 
           data: [4,4,9,10,9,10,2,5], 
-          borderColor: '#94a3b8',        // Muted Slate
+          borderColor: '#94a3b8',
           backgroundColor: '#94a3b810', 
           borderWidth: 1.5, 
           pointRadius: 2 
@@ -661,10 +661,19 @@ function initRadar() {
         { 
           label: 'GoPro Hero 13', 
           data: [9,9,7,3,9,6,5,8], 
-          borderColor: '#ef4444',        // Red
-          backgroundColor: '#ef444410', 
+          borderColor: '#a855f7',
+          backgroundColor: '#a855f710', 
           borderWidth: 1.5, 
           pointRadius: 2 
+        },
+        { 
+          label: 'Insta360 X5', 
+          data: [10,4,2,1,10,3,4,7], 
+          borderColor: '#ef4444',
+          backgroundColor: '#ef444410', 
+          borderWidth: 1.5, 
+          pointRadius: 2,
+          borderDash: [5, 5]
         }
       ]
     },
@@ -688,7 +697,7 @@ function initCost() {
       datasets: [{
         label: 'Estimated System Cost ($)',
         data: [60, 108, 110, 135, 480, 550],
-        backgroundColor: ['#94a3b8', '#3fb950', '#3b82f6', '#ffcc00', '#ef4444', '#ef4444'],
+        backgroundColor: ['#94a3b8', '#3fb950', '#3b82f6', '#ffcc00', '#a855f7', '#ef4444'],
         borderRadius: 4
       }]
     },
