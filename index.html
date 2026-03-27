@@ -561,11 +561,14 @@ function showTab(id) {
   if (id === 'cost') initCost();
 }
 
+// Sponsor email dropdown toggle
 function toggleEmail(id) {
   const el = document.getElementById(id);
-  if (el) {
-    el.classList.toggle('active');
-  }
+  const isActive = el.classList.contains('active');
+  // Close all others first
+  document.querySelectorAll('.sponsor-details').forEach(d => d.classList.remove('active'));
+  // Toggle this one
+  if (!isActive) el.classList.add('active');
 }
 
 // Radar Chart
