@@ -57,20 +57,15 @@
   .v-content { background: #ef444422; color: var(--red); }
 /* Brighter green for SENT status */
 .v-sent { background-color: rgba(46, 160, 67, 0.15); color: #3fb950; font-size: 9px; font-weight: 700; letter-spacing: 0.8px; padding: 2px 6px; border-radius: 3px; }
-
-/* Sponsor dropdown styling */
-.sponsor-toggle { cursor: pointer; transition: background 0.15s; border-radius: 8px; }
-.sponsor-toggle:hover { background: #1a2235; }
-.sponsor-expand-hint { font-size: 9px; color: var(--text-dim); margin-top: 6px; transition: opacity 0.15s; }
-.sponsor-toggle:hover .sponsor-expand-hint { opacity: 1; }
+/* Dropdown styling */
 .sponsor-details { display: none; width: 100%; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-.sponsor-details.active { display: block; }
-.email-subject { font-size: 11px; font-weight: 600; color: var(--accent-light); margin-bottom: 8px; }
-.email-body { background: #080c14; padding: 12px; border-radius: 6px; font-size: 10px; color: var(--text-muted); white-space: pre-wrap; overflow-x: auto; border: 1px solid var(--border); line-height: 1.6; max-height: 400px; overflow-y: auto; }
-.email-sent-date { font-size: 9px; color: #3fb950; margin-bottom: 6px; }
 
-/* Sponsor card layout */
-.sponsor-card { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+.sponsor-details.active { display: block; }
+
+.email-copy { background: #000; padding: 10px; border-radius: 4px; font-size: 10px; color: var(--text-muted); white-space: pre-wrap; overflow-x: auto; border: 1px solid var(--border); }
+
+.sponsor-card { cursor: pointer; transition: opacity 0.2s; }
+.sponsor-card:hover { opacity: 0.8; }
 
   /* Finding cards */
   .finding { border-left: 3px solid; padding: 12px 16px; }
@@ -98,6 +93,7 @@
   .progress-bar { margin-top: 8px; padding: 6px 10px; background: #3b82f611; border-radius: 4px; font-size: 10px; color: var(--accent-light); }
 
   /* Sponsorship */
+  .sponsor-card { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
   .sponsor-value { font-size: 13px; font-weight: 700; color: var(--accent-light); }
 
   /* Milestone */
@@ -157,12 +153,12 @@
 
 <!-- Tabs -->
 <div class="tabs">
-  <button class="tab active" onclick="showTab('overview', this)">Overview</button>
-  <button class="tab" onclick="showTab('options', this)">Camera Options</button>
-  <button class="tab" onclick="showTab('cost', this)">Cost/Benefit</button>
-  <button class="tab" onclick="showTab('timeline', this)">Timeline</button>
-  <button class="tab" onclick="showTab('sponsorship', this)">Sponsorship</button>
-  <button class="tab" onclick="showTab('unknowns', this)">Open Items</button>
+  <button class="tab active" onclick="showTab('overview')">Overview</button>
+  <button class="tab" onclick="showTab('options')">Camera Options</button>
+  <button class="tab" onclick="showTab('cost')">Cost/Benefit</button>
+  <button class="tab" onclick="showTab('timeline')">Timeline</button>
+  <button class="tab" onclick="showTab('sponsorship')">Sponsorship</button>
+  <button class="tab" onclick="showTab('unknowns')">Open Items</button>
 </div>
 
 <!-- ═══ OVERVIEW TAB ═══ -->
@@ -199,7 +195,7 @@
   <div class="card">
     <p style="margin-bottom:8px">Pi is available but not required. Four viable approaches identified:</p>
     <div class="arch-item"><div class="arch-dot" style="background:var(--accent)"></div><div><div class="arch-name">Pi-Mediated (USB)</div><div class="arch-desc">USB camera → Pi 4B → HDMI display. Most flexible, software mirror flip.</div></div></div>
-    <div class="arch-item"><div class="arch-dot" style="background:var(--yellow)"></div><div><div class="arch-name">Pi-Mediated (CSI)</div><div class="arch-desc">CSI camera → Pi 4B → HDMI display. Lowest Pi latency, but 3m cable too long for ribbon.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:#3fb950"></div><div><div class="arch-name" style="color:#3fb950">★ Pi-Mediated (CSI + HDMI Extender)</div><div class="arch-desc">CSI camera → Arducam CSI-to-HDMI adapter → 3m HDMI cable → adapter → Pi 4B → HDMI display. Lowest latency path — CSI goes direct to GPU. 3m cable solved by $15 extension kit.</div></div></div>
     <div class="arch-item"><div class="arch-dot" style="background:var(--orange)"></div><div><div class="arch-name">Direct Analog (AHD)</div><div class="arch-desc">AHD camera → wire → dedicated monitor. Simplest, lowest latency, no Pi.</div></div></div>
     <div class="arch-item"><div class="arch-dot" style="background:var(--purple)"></div><div><div class="arch-name">Action Camera HDMI</div><div class="arch-desc">GoPro/Insta360 → HDMI direct or via Pi → display. Best quality, highest cost.</div></div></div>
   </div>
@@ -219,6 +215,7 @@
       <thead><tr><th>Option</th><th>Architecture</th><th>FPS</th><th>FOV</th><th>Latency</th><th>Quality</th><th>Cost</th><th>Verdict</th></tr></thead>
       <tbody>
         <tr><td style="font-weight:600">AHD Backup Kit</td><td style="color:var(--text-muted);font-size:10px">Camera → AHD → Monitor</td><td>25-30</td><td>120-170°</td><td>&lt;50ms</td><td>OK</td><td>$40-80</td><td><span class="verdict v-baseline">BASELINE</span></td></tr>
+        <tr style="background:#22c55e08"><td style="font-weight:600;color:#3fb950">★ Pi Camera 3 Wide + CSI Ext.</td><td style="color:var(--text-muted);font-size:10px">CSI → HDMI ext. → Pi 4B → HDMI</td><td>50 @1080p</td><td>120°D / ~104°H</td><td>~30-40ms</td><td>Excellent + HDR</td><td>~$108</td><td><span class="verdict v-strong">BEST VALUE</span></td></tr>
         <tr><td style="font-weight:600">ELP OV4689 + Pi</td><td style="color:var(--text-muted);font-size:10px">USB → Pi 4B → HDMI</td><td>60 @1080p</td><td>100°D / ~85°H</td><td>55-65ms</td><td>Good</td><td>$95-120</td><td><span class="verdict v-strong">STRONG</span></td></tr>
         <tr><td style="font-weight:600">Arducam B0497 + Pi</td><td style="color:var(--text-muted);font-size:10px">USB3 → Pi 4B → HDMI</td><td>60+ @1080p?</td><td>100°D / ~85°H</td><td>50-65ms</td><td>Excellent</td><td>$120-150</td><td><span class="verdict v-strong">STRONG</span></td></tr>
         <tr><td style="font-weight:600">GoPro Hero 13</td><td style="color:var(--text-muted);font-size:10px">HDMI → display (or Pi)</td><td>60 @1080p</td><td>~120° Wide</td><td>33-50ms</td><td>Excellent</td><td>$480+</td><td><span class="verdict v-sponsored">IF SPONSORED</span></td></tr>
@@ -236,7 +233,8 @@
   </div>
 
   <h2>Key Findings</h2>
-  <div class="card finding" style="border-color:var(--green)"><div class="finding-title" style="color:var(--green)">ELP & Arducam are the strongest options</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. Arducam has better sensor (STARVIS 2) but slightly more expensive. ELP is proven and cheaper.</div></div>
+  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Pi Camera Module 3 Wide + CSI Extender is the top recommendation</div><div class="finding-desc">Discovered during independent deep research — official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
+  <div class="card finding" style="border-color:var(--green)"><div class="finding-title" style="color:var(--green)">ELP & Arducam USB cameras remain strong alternatives</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. ELP OV4689 has proven 60fps@1080p reliability. Arducam B0497 has the best sensor (STARVIS 2) for low-light. Good fallbacks if CSI extender has EMI issues in the motor bay.</div></div>
   <div class="card finding" style="border-color:var(--yellow)"><div class="finding-title" style="color:var(--yellow)">AHD kit is the safe fallback</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
   <div class="card finding" style="border-color:var(--purple)"><div class="finding-title" style="color:var(--purple)">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output checks out (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
   <div class="card finding" style="border-color:var(--red)"><div class="finding-title" style="color:var(--red)">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode = 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursue for content creation only.</div></div>
@@ -256,15 +254,16 @@
   <p class="subtitle">Performance per dollar (higher = better value, scale 1-10)</p>
   <div class="card">
     <div class="value-row"><div class="value-label">AHD Kit</div><div class="value-track"><div class="value-fill" style="width:72%;background:var(--orange)"><span>7.2</span></div></div><div class="value-cost">$40-80</div></div>
-    <div class="value-row"><div class="value-label">ELP OV4689</div><div class="value-track"><div class="value-fill" style="width:88%;background:var(--accent)"><span>8.8</span></div></div><div class="value-cost">$95-120</div></div>
+    <div class="value-row"><div class="value-label" style="color:#3fb950">★ Pi Cam 3 Wide</div><div class="value-track"><div class="value-fill" style="width:94%;background:#3fb950"><span>9.4</span></div></div><div class="value-cost">~$108</div></div>
+    <div class="value-row"><div class="value-label">ELP OV4689</div><div class="value-track"><div class="value-fill" style="width:86%;background:var(--accent)"><span>8.6</span></div></div><div class="value-cost">$95-120</div></div>
     <div class="value-row"><div class="value-label">Arducam B0497</div><div class="value-track"><div class="value-fill" style="width:84%;background:var(--green)"><span>8.4</span></div></div><div class="value-cost">$120-150</div></div>
     <div class="value-row"><div class="value-label">GoPro Hero 13</div><div class="value-track"><div class="value-fill" style="width:52%;background:var(--purple)"><span>5.2</span></div></div><div class="value-cost">$480+</div></div>
     <div class="value-row"><div class="value-label">Insta360 X5</div><div class="value-track"><div class="value-fill" style="width:21%;background:var(--red)"><span>2.1</span></div></div><div class="value-cost">$550+</div></div>
   </div>
 
-  <h2>For Shannon !!</h2>
+  <h2>Bottom Line for Shannon</h2>
   <div class="bottom-line">
-    <p><strong>Primary recommendation: ELP OV4689 or Arducam B0497 + Pi 4B + Waveshare display.</strong> Both deliver 60fps, 100° FOV, regulation compliance, and total system cost under $150. ELP is the safer and cheaper ($95-120). Arducam has a superior sensor if the B0497 confirms 60fps at 1080p ($120-150). Sponsorship responses may change results. If GoPro comes through, that becomes a viable upgrade, but the primary plan should not depend on sponsorship.</p>
+    <p><strong>Primary recommendation: Raspberry Pi Camera Module 3 Wide + Arducam CSI-to-HDMI Extension Kit + Waveshare 7" display.</strong> Total system cost ~$108. This option delivers the lowest latency (~30-40ms, CSI bypasses USB entirely), widest FOV (104° horizontal), hardware HDR for outdoor conditions, autofocus, and first-party Pi software support. It's cheaper than both the ELP and Arducam USB options while outperforming them on latency and FOV. ELP OV4689 and Arducam B0497 remain strong alternatives if the CSI extender has EMI issues in the motor bay. Sponsorship responses may upgrade the picture further.</p>
   </div>
 </div>
 
@@ -279,11 +278,11 @@
     <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Draft all sponsorship emails (6 emails, 5 companies)</span></div>
     <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Confirm Pi model (Pi 4B)</span></div>
     <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Confirm display is my scope</span></div>
-    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Send sponsorship emails (6 emails, 5 companies — sent 3/26 8AM)</span></div>
-    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Message Ethan for past emails (replied — emails already sent)</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Send sponsorship emails</span></div>
+    <div class="task"><div class="checkbox done">✓</div><span class="task-text done">Message Ethan for past emails</span></div>
     <div class="task"><div class="checkbox"></div><span class="task-text">Find out old camera setup details</span></div>
     <div class="task"><div class="checkbox"></div><span class="task-text">Look at back of car mounting</span></div>
-    <div class="progress-bar">Progress: 7/9 tasks complete (78%)</div>
+    <div class="progress-bar">Progress: 7/9 tasks complete (56%)</div>
   </div>
 
   <div class="card">
@@ -304,7 +303,7 @@
 
   <h2>Key Milestones</h2>
   <div class="card">
-    <div class="milestone"><div class="milestone-date">End of Week 1</div><div class="milestone-text">Sponsorship emails sent. Options documented.</div><div class="milestone-status" style="color:#3fb950">✓ COMPLETED</div></div>
+    <div class="milestone"><div class="milestone-date">End of Week 1</div><div class="milestone-text">Sponsorship emails sent. Options documented.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
     <div class="milestone"><div class="milestone-date">Start of Week 2</div><div class="milestone-text">Options analysis presented to Shannon with recommendation.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
     <div class="milestone"><div class="milestone-date">Mid Week 2</div><div class="milestone-text">Parts ordered. Bench testing begins.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
     <div class="milestone"><div class="milestone-date">End of Week 3</div><div class="milestone-text">System installed, tested, documented on car.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
@@ -314,201 +313,22 @@
 <!-- ═══ SPONSORSHIP TAB ═══ -->
 <div id="sponsorship" class="tab-content">
   <h2>Sponsorship Outreach Tracker</h2>
-  <p class="subtitle">6 emails to 5 companies — Sent on 3/26/2026 at 8 AM Central · Click any card to view the email sent</p>
+  <p class="subtitle">6 emails to 5 companies — Sent out on 3/26 at 8 AM Central</p>
 
-  <!-- Insta360 -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-insta360')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Insta360</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">X5 + camera consultation</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">insta360.com/contact + Think Bold Fund</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$550</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-insta360" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)</div>
-      <div class="email-body">Dear Insta360 Partnerships Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for camera systems on NUSolar, which is our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 which is a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
-
-We have two camera needs for our car, and I'd love to explore whether Insta360 could help with either or both:
-
-1. Real-time rear-vision safety system: Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate, and strong dynamic range. I've been looking at your products and would love to have your team's input on whether any Insta360 cameras such as the Ace Pro 2, Link series, or another product, could support real-time, low-latency video output for this kind of application.
-
-2. Race-day 360° content: Separately, we'd love to mount an X5 on the car to capture immersive footage during the race. A solar car crossing the country feels like a natural fit for the kind of content Insta360 is known for, and we'd be excited to share it across our social media channels.
-
-We're reaching out to see if Insta360 would be open to supporting our team through a product donation or discounted partnership. In return, we can offer:
-
-• Insta360 logo placement on the solar car body (visible in all race media)
-• Branding on team t-shirts and pit crew apparel
-• Social media posts and race-day content featuring Insta360 products
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-Even if the rear-vision application isn't a fit for your current products, we'd still love to partner on the content side. Would someone on your team be available to discuss this?
-
-Thank you for your time.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-
-  <!-- ELP Lizzy Liu -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-elp1')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Ms. Lizzy Liu)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@elpcctv.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-elp1" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026</div>
-      <div class="email-body">Dear Ms. Liu,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between ELP and NUSolar, our university's solar car racing team.
-
-I have been following ELP's advancements in high-speed USB camera modules, particularly the OV4689-based boards, and believe our upcoming project is the perfect platform to showcase your technology in a real-world embedded engineering application.
-
-About the Project:
-NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. Our system requires a USB camera with 60+ fps at 1080p, wide-angle FOV with no distortion, low latency, and compatibility with a Raspberry Pi 4B. After looking through your products, we've found the ELP-USBFHD08S-LC1100 (100° no-distortion lens) as the best technical fit for our application. Its ~85° horizontal FOV, distortion-free image, and high frame rate meet all of our competition safety regulations.
-
-How We Will Promote ELP:
-• Featuring the ELP camera in race-day social media content with direct links to your product pages
-• Showcasing the camera's performance in a real-time embedded vision system on a solar-powered vehicle
-• ELP logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting how ELP hardware was integrated into our system, shareable by your team for marketing
-
-What We Are Requesting:
-We are looking for sponsorship in the form of 1–2x ELP-USBFHD08S-LC1100 camera modules (OV4689, 100° no-distortion lens) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
-
-We admire ELP's commitment to providing cost-effective, high-quality USB camera solutions for embedded and industrial applications, and would be honored to partner together. Thank you for considering this proposal.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-
-  <!-- ELP Sales Team -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-elp2')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Sales Team)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">ailipu_sales5@elpcctv.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-elp2" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026</div>
-      <div class="email-body">Dear ELP Sales Team,
-
-[Same content as Ms. Lizzy Liu email above, addressed to "Dear ELP Sales Team" instead]</div>
-    </div>
-  </div>
-
-  <!-- Arducam -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-arducam')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Arducam</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">B0497 (IMX678 STARVIS 2, USB 3.0, 100°D)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">support@arducam.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70-80</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-arducam" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x Arducam — Raspberry Pi Rear-Vision System for ASC 2026</div>
-      <div class="email-body">Dear Arducam Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Arducam and NUSolar, our university's solar car racing team.
-
-Arducam's focus on Raspberry Pi-compatible embedded camera solutions is a great fit for our project, and I believe this is a great opportunity to showcase your technology in a real-world engineering application.
-
-About the Project:
-NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. The system requires:
-
-• 60+ fps at 1080p for smooth real-time video
-• Wide-angle FOV (≥60° horizontal) to meet competition safety regulations
-• Strong low-light and wide dynamic range performance for varying outdoor conditions
-• USB interface compatible with Raspberry Pi 4B (3m cable run rules out CSI)
-• Compact form factor for rear-vehicle mounting
-
-After looking through your products, we've found the Arducam B0497 (8.3MP IMX678 STARVIS 2 USB 3.0 camera module with 100°D M12 lens) as a strong candidate. Its STARVIS 2 sensor, wide-angle lens, USB 3.0 high-speed connectivity, and Pi compatibility align well with our requirements. We were also wondering whether the B0497 can sustain 60fps at 1080p, and whether you'd recommend a different model if it's a better fit for a real-time, low-latency video application.
-
-How We Will Promote Arducam:
-• Featuring the Arducam camera in race-day social media content with links to your product pages
-• Showcasing Arducam hardware in a Pi-based embedded vision system on a solar-powered vehicle
-• Arducam logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting how Arducam hardware was integrated into our Pi 4B system, shareable for your marketing and developer community
-
-What We Are Requesting:
-We are looking for sponsorship in the form of 1–2x Arducam B0497 camera modules (or a similar recommended product) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
-
-We admire Arducam's commitment to the Raspberry Pi and embedded vision community, and would be honored to partner together. Thank you for considering this proposal.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-
-  <!-- Waveshare -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-waveshare')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Waveshare</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">7" HDMI LCD (H) w/ case (1024×600 IPS)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@waveshare.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$50-55</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-waveshare" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x Waveshare Display — Raspberry Pi Rear-Vision System for ASC 2026</div>
-      <div class="email-body">Dear Waveshare Sales Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Waveshare and NUSolar, our university's solar car racing team.
-
-Waveshare's reputation for high-quality Raspberry Pi displays and commitment to the developer community make this a great fit for our project.
-
-About the Project:
-NUSolar is building a real-time rear-vision camera and display system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. The system connects a USB camera with a Raspberry Pi 4B, which outputs the live rear-view feed over HDMI to a dashboard-mounted display for the driver.
-
-Our display requirements:
-• 7" HDMI IPS panel for wide viewing angles (driver must see screen from normal seating position per competition regulation 9.7.E.3)
-• Rigid, durable construction for vehicle mounting which withstands road vibration without shifting (competition regulation 9.7.E.2)
-• 1024×600 or higher resolution for clear image detail
-• 5V power input compatible with Raspberry Pi 4B
-• Pi 4B driver-free compatibility
-
-After looking through your products, we've found the Waveshare 7inch HDMI LCD (H) with case as the best fit. Its IPS panel, toughened glass (6H hardness), rigid case, and driver-free Pi 4B compatibility meet all of our competition and vehicle requirements.
-
-How We Will Promote Waveshare:
-• Featuring the Waveshare display in race-day social media content with links to your product pages
-• Showcasing Waveshare hardware as the driver's real-time rearview display on a solar-powered vehicle
-• Waveshare logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting the Pi 4B + Waveshare display integration, shareable for your developer community and marketing
-
-What We Are Requesting:
-We are looking for sponsorship in the form of 1x Waveshare 7inch HDMI LCD (H) with case (1024×600, IPS, toughened glass) to serve as the driver's rear-vision display. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
-
-We admire Waveshare's commitment to making innovation easier for developers and engineers, and would be honored to partner together. Thank you for considering this proposal.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-
-  <!-- GoPro -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-gopro')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">GoPro</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Hero 13 Black + Media Mod</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">gopro.com/connect + gopro.com/sponsorship</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$480</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-gopro" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)</div>
-      <div class="email-body">Dear GoPro Partnerships Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for the camera systems on NUSolar, our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 which is a cross-country solar-powered car race that brings together top engineering programs from across the country and generates significant media coverage.
-
-We have two camera needs for our car, and I'd love to explore whether GoPro could help with either or both:
-
-1. Real-time rear-vision safety system: Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate (60 fps), and reliable HDMI output. After looking through your products, the Hero 13 Black stands out to us. Its 1080p@60fps HDMI output in idle/preview mode with low latency (stabilization off) is well-suited for a real-time rear-view application. We would also need a Media Mod for HDMI access. We would love your team's input on whether this use case is a good fit for the Hero 13 or if you'd recommend a different model.
-
-2. Race-day content: A GoPro mounted on a solar car racing across the country is exactly the kind of adventure content GoPro is known for and we'd love to capture and share action footage throughout the competition on our social media channels.
-
-We're reaching out to see if GoPro would be open to supporting our team through a product sponsorship. If a full sponsorship isn't possible, we would also greatly appreciate a discounted partnership, student pricing, or any level of product support. In return, we can offer:
-
-• GoPro logo placement on the solar car body (visible in all race media)
-• Branding on team t-shirts and pit crew apparel
-• Social media posts and race-day content captured with GoPro
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-Would someone on your team be available to discuss this?
-
-Thank you for your time.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Insta360</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">X5 + camera consultation</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">insta360.com/contact + Think Bold Fund</div></div><div style="text-align:right"><div class="sponsor-value">$550</div><span class="verdict v-baseline">SENT</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Ms. Lizzy Liu)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d2c0cdc4d2e1c4cdd1c2c2d5d78fc2cecc">[email&#160;protected]</a></div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-baseline">SENT</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Sales Team)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e6eeebeef7f2d8f4e6ebe2f4b2c7e2ebf7e4e4f3f1a9e4e8ea">[email&#160;protected]</a></div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-baseline">SENT</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Arducam</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">B0497 (IMX678 STARVIS 2, USB 3.0, 100°D)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddaea8adadb2afa99dbcafb9a8bebcb0f3beb2b0">[email&#160;protected]</a></div></div><div style="text-align:right"><div class="sponsor-value">$70-80</div><span class="verdict v-baseline">SENT</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Waveshare</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">7" HDMI LCD (H) w/ case (1024×600 IPS)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2655474a43556651475043554e4754430845494b">[email&#160;protected]</a></div></div><div style="text-align:right"><div class="sponsor-value">$50-55</div><span class="verdict v-baseline">SENT</span></div></div></div>
+  <div class="card"><div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">GoPro</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Hero 13 Black + Media Mod</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">gopro.com/connect + gopro.com/sponsorship</div></div><div style="text-align:right"><div class="sponsor-value">$480</div><span class="verdict v-baseline">SENT</span></div></div></div>
 
   <h2>Pre-Send Checklist</h2>
   <div class="card">
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">Send from school email</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">CC solar@u.northwestern.edu on ALL emails</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">All emails include "sponsorship or discount" fallback language</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">All emails specify exact product models verified against regs</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">Insta360: also apply to Think Bold Fund (+ Dillo Day content angle)</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">Send from school email</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">CC <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4635292a2734063368282934322e3123353223342868232233">[email&#160;protected]</a> on ALL emails</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">All emails include "sponsorship or discount" fallback language</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">All emails specify exact product models verified against regs</span></div>
+    <div class="check-item"><div class="check-dot"></div><span style="font-size:11px;color:var(--text-muted)">Insta360: also apply to Think Bold Fund (+ Dillo Day content angle)</span></div>
   </div>
 </div>
 
@@ -517,7 +337,8 @@ Spencer Kogoma</div>
   <h2>Still Need To Find Out</h2>
   <div class="card finding" style="border-color:var(--yellow)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">What the old backup camera system looked like</div><div class="finding-desc">Ask Shannon · </div></div><span class="priority p-med">MED</span></div></div>
   <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Physical mounting situation at back of car</div><div class="finding-desc">Go look · Determines enclosure design, cable routing, vibration concerns</div></div><span class="priority p-high">HIGH</span></div></div>
-  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Arducam B0497 actual 1080p frame rate</div><div class="finding-desc">Ask Arducam (in email) · Need to confirm 60fps@1080p for final recommendation</div></div><span class="priority p-high">HIGH</span></div></div>
+  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">CSI-to-HDMI extender reliability in high EMI environment</div><div class="finding-desc">Test near motors · If CSI extender drops frames near motor bay, fall back to USB camera (ELP or Arducam)</div></div><span class="priority p-high">HIGH</span></div></div>
+  <div class="card finding" style="border-color:var(--red)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">Arducam B0497 actual 1080p frame rate</div><div class="finding-desc">Ask Arducam (in email) · Need to confirm 60fps@1080p for fallback recommendation</div></div><span class="priority p-high">HIGH</span></div></div>
   <div class="card finding" style="border-color:var(--text-dim)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="finding-title">GoPro Hero 13 always-on HDMI behavior</div><div class="finding-desc">Test or ask GoPro · Only matters if sponsored</div></div><span class="priority p-low">LOW</span></div></div>
 
   <h2>Decisions Still Needed</h2>
@@ -531,25 +352,16 @@ Spencer Kogoma</div>
 <!-- Footer -->
 <div class="footer">NUSolar Rear Vision System · Spencer Kogoma · Last Updated: March 26, 2026 · Week 1 Checkpoint</div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Tab switching
-function showTab(id, btn) {
+function showTab(id) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+  event.target.classList.add('active');
+  // Init charts if switching to those tabs
   if (id === 'options') initRadar();
   if (id === 'cost') initCost();
-}
-
-// Sponsor email dropdown toggle
-function toggleEmail(id) {
-  const el = document.getElementById(id);
-  const isActive = el.classList.contains('active');
-  // Close all others first
-  document.querySelectorAll('.sponsor-details').forEach(d => d.classList.remove('active'));
-  // Toggle this one
-  if (!isActive) el.classList.add('active');
 }
 
 // Radar Chart
@@ -562,6 +374,7 @@ function initRadar() {
     data: {
       labels: ['Image Quality', 'Frame Rate', 'Low Latency', 'Low Cost', 'FOV', '3-Wk Feasibility', 'Pi Compatible', 'EMI Resilience'],
       datasets: [
+        { label: '★ Pi Cam 3 Wide', data: [8,8,9,8,10,9,10,6], borderColor: '#3fb950', backgroundColor: '#3fb95020', borderWidth: 2.5, pointRadius: 4 },
         { label: 'ELP OV4689', data: [7,9,7,8,8,9,9,7], borderColor: '#3b82f6', backgroundColor: '#3b82f618', borderWidth: 2, pointRadius: 3 },
         { label: 'Arducam B0497', data: [9,8,7,7,8,8,9,7], borderColor: '#22c55e', backgroundColor: '#22c55e18', borderWidth: 2, pointRadius: 3 },
         { label: 'AHD Kit', data: [4,4,9,10,9,10,2,5], borderColor: '#f97316', backgroundColor: '#f9731610', borderWidth: 1.5, pointRadius: 2 },
@@ -577,20 +390,18 @@ function initRadar() {
 }
 
 // Cost Chart
-// Cost Chart
 let costInit = false;
 function initCost() {
-  if (costInit) return; 
-  costInit = true;
+  if (costInit) return; costInit = true;
   const ctx = document.getElementById('costChart').getContext('2d');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['AHD Kit', 'ELP OV4689', 'Arducam B0497', 'GoPro Hero 13', 'Insta360 X5'],
+      labels: ['AHD Kit', '★ Pi Cam 3 Wide', 'ELP OV4689', 'Arducam B0497', 'GoPro Hero 13', 'Insta360 X5'],
       datasets: [{
         label: 'Estimated System Cost ($)',
-        data: [60, 110, 135, 480, 550],
-        backgroundColor: ['#f97316', '#3b82f6', '#22c55e', '#a855f7', '#ef4444'],
+        data: [60, 108, 110, 135, 480, 550],
+        backgroundColor: ['#f97316', '#3fb950', '#3b82f6', '#22c55e', '#a855f7', '#ef4444'],
         borderRadius: 4
       }]
     },
@@ -599,10 +410,10 @@ function initCost() {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
-        y: { grid: { display: false }, ticks: { color: '#e2e8f0' } }
+        x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', callback: v => '$' + v } },
+        y: { grid: { display: false }, ticks: { color: '#e2e8f0', font: { size: 10 } } }
       },
-      plugins: { legend: { display: false } }
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.x } } }
     }
   });
 }
