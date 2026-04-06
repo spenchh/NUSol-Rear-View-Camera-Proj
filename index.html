@@ -268,8 +268,8 @@
 
 <!-- ═══ CAMERA OPTIONS TAB ═══ -->
 <div id="options" class="tab-content">
-  <h2>Full Options Comparison</h2>
-  <p class="subtitle">All options verified against ASC 2026 9.7.E requirements and car constraints</p>
+  <h2>Comparison</h2>
+  <p class="subtitle">All platforms verified against ASC 2026 9.7.E requirements and car constraints</p>
   <div class="card" style="overflow-x:auto">
     <table>
       <thead><tr><th>Option</th><th>Architecture</th><th>FPS</th><th>FOV</th><th>Latency</th><th>Quality</th><th>Cost</th><th>Verdict</th></tr></thead>
@@ -284,7 +284,7 @@
     </table>
   </div>
 
-  <h2>Performance Radar</h2>
+  <h2>Performance</h2>
   <p class="subtitle">Higher is better for each metric (1-10 scale)</p>
   <div class="card">
     <div class="chart-container" style="max-height:400px">
@@ -293,16 +293,16 @@
   </div>
 
   <h2>Key Findings</h2>
-  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Pi Camera Module 3 Wide + CSI Extender is the top recommendation</div><div class="finding-desc">Discovered during independent deep research — official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
+  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Top Rec: Pi Camera Module 3 Wide + CSI Extender</div><div class="finding-desc">Official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
   <div class="card finding" style="border-color:var(--green)"><div class="finding-title" style="color:var(--green)">ELP & Arducam USB cameras remain strong alternatives</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. ELP OV4689 has proven 60fps@1080p reliability. Arducam B0497 has the best sensor (STARVIS 2) for low-light. Good fallbacks if CSI extender has EMI issues in the motor bay.</div></div>
   <div class="card finding" style="border-color:var(--yellow)"><div class="finding-title" style="color:var(--yellow)">AHD kit is the safe fallback</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
-  <div class="card finding" style="border-color:var(--purple)"><div class="finding-title" style="color:var(--purple)">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output checks out (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
-  <div class="card finding" style="border-color:var(--red)"><div class="finding-title" style="color:var(--red)">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode = 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursue for content creation only.</div></div>
+  <div class="card finding" style="border-color:var(--purple)"><div class="finding-title" style="color:var(--purple)">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output is good (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
+  <div class="card finding" style="border-color:var(--red)"><div class="finding-title" style="color:var(--red)">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode is 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursuing for content creation only.</div></div>
 </div>
 
 <!-- ═══ COST/BENEFIT TAB ═══ -->
 <div id="cost" class="tab-content">
-  <h2>Cost Comparison</h2>
+  <h2>Cost</h2>
   <p class="subtitle">Total system cost including display (if separate)</p>
   <div class="card">
     <div class="chart-container" style="max-height:300px">
@@ -361,7 +361,7 @@
     <div class="task"><div class="checkbox"></div><span class="task-text">Final documentation + handoff notes</span></div>
   </div>
 
-  <h2>Key Milestones</h2>
+  <h2>Milestones</h2>
   <div class="card">
     <div class="milestone"><div class="milestone-date">End of Week 1</div><div class="milestone-text">Sponsorship emails sent. Options documented.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
     <div class="milestone"><div class="milestone-date">Start of Week 2</div><div class="milestone-text">Options analysis presented to Shannon with recommendation.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
@@ -670,7 +670,6 @@ Spencer Kogoma</div>
   <!-- Waveshare -->
   <div class="card sponsor-toggle" onclick="toggleEmail('email-waveshare')">
     <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Waveshare</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">7" HDMI LCD (H) w/ case (1024×600 IPS)</div><div style="margin-top:6px;">
-        <span style="font-size:9px; background:#3b82f622; color:var(--accent-light); padding:2px 6px; border-radius:3px; font-weight:700; border:1px solid #ff54b85f;">REPLY RECEIVED</span>
       </div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@waveshare.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$50-55</div><span class="verdict v-sent">SENT</span></div></div>
     <div id="email-waveshare" class="sponsor-details">
       <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
