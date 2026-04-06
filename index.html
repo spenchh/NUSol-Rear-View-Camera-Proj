@@ -225,7 +225,7 @@
 <div id="overview" class="tab-content active">
   <h2>Project Summary</h2>
   <div class="card">
-    <p>Design and build a real-time rear-vision camera and display system for the NUSolar car that passes ASC 2026 Section 9.7.E scrutineering. Must provide always-on, mirror-image, low-latency rear view. Driver tested on identifying arrow direction at 15m.</p>
+    <p>Design and build a real-time rear-vision camera and display system for the NUSolar car that passes ASC 2026 Section 9.7.E. Must provide always-on, mirror-image, low-latency rear view. Driver tested on identifying arrow direction at 15m.</p>
   </div>
 
   <h2>Regulation Requirements (9.7.E)</h2>
@@ -251,18 +251,18 @@
     <div class="card spec-card green"><div class="spec-label">Display</div><div class="spec-value">My scope (7" HDMI)</div></div>
   </div>
 
-  <h2>System Architecture — Open Decision</h2>
+  <h2>System Architecture • Open Decision</h2>
   <div class="card">
-    <p style="margin-bottom:8px">Pi is available but not required. Four viable approaches identified:</p>
+    <p style="margin-bottom:8px">Pi is available but not required. Four viable approaches:</p>
     <div class="arch-item"><div class="arch-dot" style="background:var(--accent)"></div><div><div class="arch-name">Pi-Mediated (USB)</div><div class="arch-desc">USB camera → Pi 4B → HDMI display. Most flexible, software mirror flip.</div></div></div>
     <div class="arch-item"><div class="arch-dot" style="background:#3fb950"></div><div><div class="arch-name" style="color:#3fb950">★ Pi-Mediated (CSI + HDMI Extender)</div><div class="arch-desc">CSI camera → Arducam CSI-to-HDMI adapter → 3m HDMI cable → adapter → Pi 4B → HDMI display. Lowest latency path — CSI goes direct to GPU. 3m cable solved by $15 extension kit.</div></div></div>
     <div class="arch-item"><div class="arch-dot" style="background:var(--orange)"></div><div><div class="arch-name">Direct Analog (AHD)</div><div class="arch-desc">AHD camera → wire → dedicated monitor. Simplest, lowest latency, no Pi.</div></div></div>
     <div class="arch-item"><div class="arch-dot" style="background:var(--purple)"></div><div><div class="arch-name">Action Camera HDMI</div><div class="arch-desc">GoPro/Insta360 → HDMI direct or via Pi → display. Best quality, highest cost.</div></div></div>
   </div>
 
-  <h2>FPGA Considered & Ruled Out</h2>
+  <h2>Using an FPGA?</h2>
   <div class="callout">
-    <p>Considered using an FPGA for lowest-possible latency (&lt;10ms). Shannon said "design complexity is significantly higher. I'll let you figure out if the benefits for latency + quality are better." After analysis: Mach XO3L lacks resources for video. A capable FPGA board would cost $100-250+ and require weeks of HDL development beyond current skill level. Pi path achieves 50-80ms which is sufficient for rear-view at highway speeds. <strong>Decision: Pi for now, FPGA as documented future upgrade path.</strong></p>
+    <p>Considered using an FPGA for lowest-possible latency (&lt;10ms). Unfortunately, Mach XO3L (current FPGA we have) lacks resources for video. A capable FPGA board would cost $100-250+ and require weeks of HDL development. Pi path achieves 50-80ms which is sufficient for rear-view at highway speeds. <strong>Decision: Pi for now, FPGA as documented future upgrade path.</strong></p>
   </div>
 </div>
 
