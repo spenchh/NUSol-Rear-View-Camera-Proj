@@ -163,10 +163,18 @@
   .spec-card.yellow { box-shadow: inset 0 0 0 1px rgba(183,121,5,.2), var(--shadow-sm); }
   .spec-card.red { box-shadow: inset 0 0 0 1px rgba(195,52,47,.2), var(--shadow-sm); }
 
-  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
-  th { padding: 13px 12px; text-align: left; color: var(--text-dim); font-weight: 800; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface-2); position: sticky; top: 64px; z-index: 2; }
-  td { padding: 14px 12px; color: var(--text); border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  table { width: 100%; min-width: 980px; border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: auto; }
+  th { padding: 14px 12px; text-align: left; color: var(--text-dim); font-weight: 800; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface-2); position: static; z-index: auto; white-space: nowrap; }
+  td { padding: 15px 12px; color: var(--text); border-bottom: 1px solid var(--border-soft); vertical-align: middle; line-height: 1.45; }
   tbody tr:hover { background: rgba(37,99,235,.045); }
+  .card[style*="overflow-x:auto"] { overflow-x: auto !important; padding-top: 0; }
+  .card[style*="overflow-x:auto"] table { margin-top: 0; }
+  .card[style*="overflow-x:auto"] th:first-child { border-top-left-radius: 12px; }
+  .card[style*="overflow-x:auto"] th:last-child { border-top-right-radius: 12px; }
+  .card[style*="overflow-x:auto"]::-webkit-scrollbar { height: 10px; }
+  .card[style*="overflow-x:auto"]::-webkit-scrollbar-track { background: #eef2f7; border-radius: 999px; }
+  .card[style*="overflow-x:auto"]::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  .card[style*="overflow-x:auto"]::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   tbody tr:last-child td { border-bottom: 0; }
 
   .verdict, .priority, .badge {
@@ -281,7 +289,7 @@
   /* Tone down legacy inline styling where it made everything scream at once. Truly brave of CSS to require this. */
   [style*="background:#22c55e08"] { background: rgba(22,128,60,.045) !important; }
   [style*="font-size:10px;color:var(--text-dim)"] { color: var(--text-dim) !important; }
-  td [style*="font-size:10px"] { font-size: 12px !important; line-height: 1.45; }
+  td [style*="font-size:10px"] { font-size: 12px !important; line-height: 1.5; display: block; min-width: 170px; color: var(--text-muted) !important; }
 
   @media (max-width: 900px) {
     body { padding: 18px 12px 36px; }
@@ -297,8 +305,8 @@
     .tabs { border-radius: 14px; }
     .tab { padding: 9px 12px; font-size: 12px; }
     .card { padding: 15px; }
-    table { font-size: 12px; }
-    th, td { padding: 11px 9px; }
+    table { font-size: 12px; min-width: 900px; }
+    th, td { padding: 12px 10px; }
     .sponsor-card { grid-template-columns: 1fr; }
     .week-header { align-items: flex-start; flex-direction: column; }
   }
