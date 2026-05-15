@@ -30,7 +30,7 @@
     --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.08);
     --radius: 16px;
     --radius-sm: 10px;
-    --max: 1180px;
+    --max: 1440px;
   }
 
   * { box-sizing: border-box; }
@@ -56,7 +56,8 @@
     mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), transparent 70%);
   }
 
-  body > * { max-width: var(--max); margin-left: auto; margin-right: auto; position: relative; }
+  body > * { width: min(100%, var(--max)); margin-left: auto; margin-right: auto; position: relative; }
+  img, canvas, video { max-width: 100%; height: auto; }
 
   h1, h2, h3, p { margin-top: 0; }
   h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.02; letter-spacing: -0.055em; font-weight: 800; margin: 10px 0 12px; }
@@ -163,7 +164,7 @@
   .spec-card.yellow { box-shadow: inset 0 0 0 1px rgba(183,121,5,.2), var(--shadow-sm); }
   .spec-card.red { box-shadow: inset 0 0 0 1px rgba(195,52,47,.2), var(--shadow-sm); }
 
-  table { width: 100%; min-width: 980px; border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: auto; }
+  table { width: 100%; min-width: min(980px, 100%); border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: auto; }
   th { padding: 14px 12px; text-align: left; color: var(--text-dim); font-weight: 800; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface-2); position: static; z-index: auto; white-space: nowrap; }
   td { padding: 15px 12px; color: var(--text); border-bottom: 1px solid var(--border-soft); vertical-align: middle; line-height: 1.45; }
   tbody tr:hover { background: rgba(37,99,235,.045); }
@@ -284,6 +285,12 @@
   .decision { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px; background: var(--surface-2); margin-bottom: 8px; }
   .decision-q { font-size: 14px; color: var(--yellow); font-weight: 800; }
 
+
+  .v-declined { background: rgba(195,52,47,.1); color: var(--red); }
+  .sponsor-static { cursor: default; }
+  .sponsor-static:hover { transform: none; box-shadow: var(--shadow-sm); border-color: var(--border-soft); }
+  .sponsor-status-note { margin-top: 10px; font-size: 13px; line-height: 1.55; color: var(--text-muted); font-weight: 650; }
+
   .footer { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--text-dim); }
 
   /* Tone down legacy inline styling where it made everything scream at once. Truly brave of CSS to require this. */
@@ -305,7 +312,7 @@
     .tabs { border-radius: 14px; }
     .tab { padding: 9px 12px; font-size: 12px; }
     .card { padding: 15px; }
-    table { font-size: 12px; min-width: 900px; }
+    table { font-size: 12px; min-width: 720px; }
     th, td { padding: 12px 10px; }
     .sponsor-card { grid-template-columns: 1fr; }
     .week-header { align-items: flex-start; flex-direction: column; }
@@ -337,7 +344,6 @@
   <button class="tab" onclick="showTab('cost', this)">Cost/Benefit</button>
   <button class="tab" onclick="showTab('timeline', this)">Timeline</button>
   <button class="tab" onclick="showTab('sponsorship', this)">Sponsorship</button>
-  <button class="tab" onclick="showTab('unknowns', this)">Open Items</button>
 </div>
 
 <!-- ═══ OVERVIEW TAB ═══ -->
@@ -370,18 +376,12 @@
     <div class="card spec-card green"><div class="spec-label">Display</div><div class="spec-value">My scope (7" HDMI)</div></div>
   </div>
 
-  <h2>System Architecture • Open Decision</h2>
+  <h2>Selected System Architecture</h2>
   <div class="card">
-    <p style="margin-bottom:8px">Pi is available but not required. Four viable approaches:</p>
-    <div class="arch-item"><div class="arch-dot" style="background:var(--accent)"></div><div><div class="arch-name">Pi-Mediated (USB)</div><div class="arch-desc">USB camera → Pi 4B → HDMI display. Most flexible, software mirror flip.</div></div></div>
-    <div class="arch-item"><div class="arch-dot" style="background:#3fb950"></div><div><div class="arch-name" style="color:#3fb950">★ Pi-Mediated (CSI + HDMI Extender)</div><div class="arch-desc">CSI camera → Arducam CSI-to-HDMI adapter → 3m HDMI cable → adapter → Pi 4B → HDMI display. Lowest latency path — CSI goes direct to GPU. 3m cable solved by $15 extension kit.</div></div></div>
-    <div class="arch-item"><div class="arch-dot" style="background:var(--orange)"></div><div><div class="arch-name">Direct Analog (AHD)</div><div class="arch-desc">AHD camera → wire → dedicated monitor. Simplest, lowest latency, no Pi.</div></div></div>
-    <div class="arch-item"><div class="arch-dot" style="background:var(--purple)"></div><div><div class="arch-name">Action Camera HDMI</div><div class="arch-desc">GoPro/Insta360 → HDMI direct or via Pi → display. Best quality, highest cost.</div></div></div>
-  </div>
-
-  <h2>Using an FPGA?</h2>
-  <div class="callout">
-    <p>Considered using an FPGA for lowest-possible latency (&lt;10ms). Unfortunately, Mach XO3L (current FPGA we have) lacks resources for video. A capable FPGA board would cost $100-250+ and require weeks of HDL development. Pi path achieves 50-80ms which is sufficient for rear-view at highway speeds. <strong>Decision: Pi for now, FPGA as documented future upgrade path.</strong></p>
+    <p style="margin-bottom:8px"><strong>Chosen path:</strong> Raspberry Pi Camera Module 3 Wide → CSI extension → Raspberry Pi 4B → Waveshare 7&quot; HDMI display.</p>
+    <div class="arch-item"><div class="arch-dot" style="background:#3fb950"></div><div><div class="arch-name" style="color:#3fb950">Raspberry Pi Camera Module 3 Wide</div><div class="arch-desc">Selected as the final camera because it gives the team a wide field of view, Pi-native support, good outdoor image quality, and a clean software path for mirror-flipped rear vision.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--accent)"></div><div><div class="arch-name">Raspberry Pi 4B + HDMI display</div><div class="arch-desc">The Pi handles the live mirrored feed and outputs to the driver-facing Waveshare display.</div></div></div>
+    <div class="arch-item"><div class="arch-dot" style="background:var(--yellow)"></div><div><div class="arch-name">Remaining mechanical decision</div><div class="arch-desc">The only major decision left is mounting: where the rear camera goes on the car, how the bracket fits, and how the wiring is routed cleanly and safely.</div></div></div>
   </div>
 </div>
 
@@ -412,7 +412,7 @@
   </div>
 
   <h2>Key Findings</h2>
-  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Top Rec: Pi Camera Module 3 Wide + CSI Extender</div><div class="finding-desc">Official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
+  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Final Choice: Pi Camera Module 3 Wide + CSI Extender</div><div class="finding-desc">Official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Selected final camera path for the rear-vision system.</div></div>
   <div class="card finding" style="border-color:var(--green)"><div class="finding-title" style="color:var(--green)">ELP & Arducam USB cameras remain strong alternatives</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. ELP OV4689 has proven 60fps@1080p reliability. Arducam B0497 has the best sensor (STARVIS 2) for low-light. Good fallbacks if CSI extender has EMI issues in the motor bay.</div></div>
   <div class="card finding" style="border-color:var(--yellow)"><div class="finding-title" style="color:var(--yellow)">AHD kit is the safe fallback</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
   <div class="card finding" style="border-color:var(--purple)"><div class="finding-title" style="color:var(--purple)">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output is good (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
@@ -439,10 +439,9 @@
     <div class="value-row"><div class="value-label" style="color:#a855f7">GoPro Hero 13</div><div class="value-track"><div class="value-fill" style="width:52%;background:#a855f7"><span>5.2</span></div></div><div class="value-cost">$480+</div></div>
     <div class="value-row"><div class="value-label" style="color:#ef4444">Insta360 X5</div><div class="value-track"><div class="value-fill" style="width:21%;background:#ef4444"><span>2.1</span></div></div><div class="value-cost">$550+</div></div>
   </div>
-
-  <h2>Rec!!</h2>
+  <h2>Final Camera Choice</h2>
   <div class="bottom-line">
-    <p><strong>Primary recommendation: Raspberry Pi Camera Module 3 Wide + Arducam CSI-to-HDMI Extension Kit + Waveshare 7" display.</strong> Total system cost ~$108. This option delivers the lowest latency (~30-40ms, CSI bypasses USB entirely), widest FOV (104° horizontal), hardware HDR for outdoor conditions, autofocus, and first-party Pi software support. It's cheaper than both the ELP and Arducam USB options while outperforming them on latency and FOV. ELP OV4689 and Arducam B0497 remain strong alternatives if the CSI extender has EMI issues in the motor bay.</p>
+    <p><strong>Decision:</strong> We chose the Raspberry Pi Camera Module 3 Wide for the rear-vision system. The final direction is a Pi-native camera pipeline using the Module 3 Wide, Raspberry Pi 4B, and Waveshare 7&quot; HDMI display. The remaining work is mechanical integration: deciding exactly where the camera mounts on the car and how the housing/bracket fits.</p>
   </div>
 </div>
 
@@ -475,7 +474,7 @@
 
   <div class="card">
     <div class="week-header"><div><span style="font-size:14px;font-weight:700">Week 3:</span> <span style="color:var(--text-muted)">Build & Test</span></div><span class="badge badge-active">IN PROGRESS</span></div>
-    <div class="task"><div class="checkbox"></div><span class="task-text">Vehicle integration + mounting</span></div>
+    <div class="task"><div class="checkbox"></div><span class="task-text">Finalize camera mounting location and bracket fit on the car</span></div>
     <div class="task"><div class="checkbox"></div><span class="task-text">15m arrow test (scrutineering simulation)</span></div>
     <div class="task"><div class="checkbox"></div><span class="task-text">Vibration + EMI testing</span></div>
     <div class="task"><div class="checkbox"></div><span class="task-text">Final documentation + handoff notes</span></div>
@@ -485,411 +484,139 @@
   <div class="card">
     <div class="milestone"><div class="milestone-date">End of Week 1</div><div class="milestone-text">Sponsorship emails sent. Options documented.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
     <div class="milestone"><div class="milestone-date">Start of Week 2</div><div class="milestone-text">Options analysis presented to Shannon with recommendation.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
-    <div class="milestone"><div class="milestone-date">Mid Week 2</div><div class="milestone-text">Parts ordered. Bench testing begins.</div><div class="milestone-status" style="color:var(--yellow)">IN PROGRESS</div></div>
-    <div class="milestone"><div class="milestone-date">End of Week 3</div><div class="milestone-text">System installed, tested, documented on car.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
+    <div class="milestone"><div class="milestone-date">Mid Week 2</div><div class="milestone-text">Parts ordered. Bench testing began.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
+    <div class="milestone"><div class="milestone-date">Start of Week 3</div><div class="milestone-text">Build and testing phase started.</div><div class="milestone-status" style="color:var(--green)">→ COMPLETED</div></div>
+    <div class="milestone"><div class="milestone-date">End of Week 3</div><div class="milestone-text">Camera mounted, tested, and documented on car.</div><div class="milestone-status" style="color:var(--text-dim)">UPCOMING</div></div>
   </div>
 </div>
 
 <!-- ═══ SPONSORSHIP TAB ═══ -->
 <div id="sponsorship" class="tab-content">
   <h2>Sponsorship Outreach Tracker</h2>
-  <p class="subtitle">10 emails to 9 companies · Click any card to view the email sent</p>
- 
-  <!-- Raspberry Pi -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-rpi')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Raspberry Pi Foundation</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Camera Module 3 Wide + Pi 4B</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">raspberrypi.org/contact</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$85</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-rpi" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 27, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team x Raspberry Pi (ASC 2026)</div>
-      <div class="email-body">Dear Raspberry Pi Team,
+  <p class="subtitle">Outreach status only · Private email content and contact details removed</p>
 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm reaching out on behalf of NUSolar, our university's student-run solar car team, because we're building a safety-critical system for our car that runs entirely on Raspberry Pi and we'd love to explore a partnership.
-
-Since 1997, NUSolar has built and raced seven solar-powered electric vehicles in national competitions. We're currently developing our next-generation car for the American Solar Challenge 2026, a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
-
-About the Project:
-I'm leading the design of our car's real-time rear-vision system which is a competition requirement that ensures the driver has a continuous, always-on rear-view feed while racing. Our system is built around a fully Pi-native pipeline:
-
-• Raspberry Pi Camera Module 3 Wide (IMX708, 120° FOV, HDR) as the rear-facing camera
-• Arducam CSI-to-HDMI extension kit to carry the CSI signal 3 meters from the rear of the car to the cockpit
-• Raspberry Pi 4B as the processing hub, handling mirror-flip and video output via libcamera
-• Waveshare 7" HDMI display for the driver's dashboard view
-
-This is a first-party Raspberry Pi camera feeding directly into a Pi 4B over CSI which is the lowest-latency path available through the Pi GPU. We chose this architecture specifically because Pi's open-source camera stack (libcamera) gave us the best combination of performance, documentation, and reliability for a safety-critical embedded application. For a team of student engineers, that software ecosystem made all the difference.
-
-What We Are Requesting:
-We would love Raspberry Pi's support in the form of:
-• 1x Raspberry Pi Camera Module 3 Wide
-• 1x Raspberry Pi 4B (or access to educational/team pricing)
-
-If a full product sponsorship isn't possible, we would also greatly appreciate educational pricing, a discount, or any level of support for our university team.
-
-How We Will Promote Raspberry Pi:
-• Raspberry Pi logo placement on our solar car body, visible in all race media and photography
-• Branding on team apparel worn by 15+ members throughout the competition
-• Social media content and race-day coverage showcasing Pi hardware in a real-world embedded system on a solar-powered vehicle
-• A technical write-up documenting the full Pi Camera 3 Wide → CSI → Pi 4B → HDMI pipeline, shareable with your developer and education community
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-Raspberry Pi's mission to empower young people through computing is exactly what NUSolar is about. Students designing, building, and racing real engineering systems. Our rear-vision project is a perfect example of a Pi being used the way it was meant to be: by students solving a real problem with open-source tools.
-
-We would love the opportunity to represent Raspberry Pi at ASC 2026. Please let us know if you'd be interested in supporting our team — we'd be thrilled to connect.
-
-Thank you for your time and consideration.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-  <!-- Adafruit Industries -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-adafruit')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Adafruit Industries</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Camera Module 3 Wide + Pi 4B</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">support@adafruit.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$85</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-adafruit" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 27, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team x Adafruit (ASC 2026)</div>
-      <div class="email-body">Dear Adafruit Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm reaching out on behalf of NUSolar, our university's student-run solar car team, because we're building a safety-critical system for our car that runs entirely on Raspberry Pi hardware, and we would love to explore a partnership with Adafruit.
-
-Since 1997, NUSolar has built and raced seven solar-powered electric vehicles in national competitions. We're currently developing our next-generation car for the American Solar Challenge 2026, a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
-
-About the Project:
-I'm leading the design of our car's real-time rear-vision system which is a competition requirement that ensures the driver has a continuous, always-on rear-view feed while racing. Our system is built around a fully Pi-native pipeline:
-
-• Raspberry Pi Camera Module 3 Wide (IMX708, 120° FOV, HDR) as the rear-facing camera
-• Arducam CSI-to-HDMI extension kit to carry the CSI signal 3 meters from the rear of the car to the cockpit
-• Raspberry Pi 4B as the processing hub, handling mirror-flip and video output via libcamera
-• Waveshare 7" HDMI display for the driver's dashboard view
-
-This is a first-party Raspberry Pi camera feeding directly into a Pi 4B over CSI which is the lowest-latency path available through the Pi GPU. We chose this architecture specifically because Pi's open-source camera stack (libcamera) gave us the best combination of performance, documentation, and reliability for a safety-critical embedded application. For a team of student engineers, that software ecosystem made all the difference.
-
-What We Are Requesting:
-We would love Adafruit's support in the form of:
-• 1x Raspberry Pi Camera Module 3 - Wide Angle
-• 1x Raspberry Pi 4B (or access to educational/team pricing)
-
-If a full product sponsorship isn't possible, we would also greatly appreciate educational pricing, a discount, or any level of support for our university team.
-
-How We Will Promote Adafruit:
-• Adafruit logo placement on our solar car body, visible in all race media and photography
-• Branding on team apparel worn by 15+ members throughout the competition
-• Social media content and race-day coverage showcasing hardware provided by Adafruit in a real-world embedded system on a solar-powered vehicle
-• A technical write-up documenting the full Pi Camera 3 Wide → CSI → Pi 4B → HDMI pipeline, shareable with your developer and education community
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-Adafruit's dedication to making electronics accessible and supporting student engineers is exactly what NUSolar is about. We would love the opportunity to represent Adafruit at ASC 2026.
-
-Thank you for your time and consideration.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-  <!-- SparkFun Electronics -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-sparkfun')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">SparkFun Electronics</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Camera Module 3 Wide + Pi 4B</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@sparkfun.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$85</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-sparkfun" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 27, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team x SparkFun (ASC 2026)</div>
-      <div class="email-body">Dear SparkFun Sponsorship Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm reaching out on behalf of NUSolar, our university's student-run solar car team, because we're building a safety-critical system for our car that runs entirely on Raspberry Pi hardware, and we would love to explore a partnership with SparkFun.
-
-Since 1997, NUSolar has built and raced seven solar-powered electric vehicles in national competitions. We're currently developing our next-generation car for the American Solar Challenge 2026, a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
-
-About the Project:
-I'm leading the design of our car's real-time rear-vision system which is a competition requirement that ensures the driver has a continuous, always-on rear-view feed while racing. Our system is built around a fully Pi-native pipeline:
-
-• Raspberry Pi Camera Module 3 Wide (IMX708, 120° FOV, HDR) as the rear-facing camera
-• Arducam CSI-to-HDMI extension kit to carry the CSI signal 3 meters from the rear of the car to the cockpit
-• Raspberry Pi 4B as the processing hub, handling mirror-flip and video output via libcamera
-• Waveshare 7" HDMI display for the driver's dashboard view
-
-This is a first-party Raspberry Pi camera feeding directly into a Pi 4B over CSI which is the lowest-latency path available through the Pi GPU. We chose this architecture specifically because Pi's open-source camera stack (libcamera) gave us the best combination of performance, documentation, and reliability for a safety-critical embedded application. For a team of student engineers, that software ecosystem made all the difference.
-
-What We Are Requesting:
-We would love SparkFun's support in the form of:
-• 1x Raspberry Pi Camera Module 3 - Wide Angle
-• 1x Raspberry Pi 4B (or access to educational/team pricing)
-
-If a full product sponsorship isn't possible, we would also greatly appreciate educational pricing, a discount, or any level of support for our university team.
-
-How We Will Promote SparkFun:
-• SparkFun logo placement on our solar car body, visible in all race media and photography
-• Branding on team apparel worn by 15+ members throughout the competition
-• Social media content and race-day coverage showcasing hardware provided by SparkFun in a real-world embedded system on a solar-powered vehicle
-• A technical write-up documenting the full Pi Camera 3 Wide → CSI → Pi 4B → HDMI pipeline, shareable with your developer and education community
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-SparkFun's commitment to open-source hardware and engineering education aligns perfectly with NUSolar. We would love the opportunity to represent SparkFun at ASC 2026.  
-
-Thank you for your time and consideration.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-  <!-- Canakit -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-canakit')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Canakit</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Camera Module 3 Wide + Pi 4B</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@canakit.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$85</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-canakit" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 27, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team x Canakit (ASC 2026)</div>
-      <div class="email-body">Dear Canakit Sales Team,
-
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm reaching out on behalf of NUSolar, our university's student-run solar car team, because we're building a safety-critical system for our car that runs entirely on Raspberry Pi hardware, and we would love to explore a partnership with Canakit.
-
-Since 1997, NUSolar has built and raced seven solar-powered electric vehicles in national competitions. We're currently developing our next-generation car for the American Solar Challenge 2026, a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
-
-About the Project:
-I'm leading the design of our car's real-time rear-vision system which is a competition requirement that ensures the driver has a continuous, always-on rear-view feed while racing. Our system is built around a fully Pi-native pipeline:
-
-• Raspberry Pi Camera Module 3 Wide (IMX708, 120° FOV, HDR) as the rear-facing camera
-• Arducam CSI-to-HDMI extension kit to carry the CSI signal 3 meters from the rear of the car to the cockpit
-• Raspberry Pi 4B as the processing hub, handling mirror-flip and video output via libcamera
-• Waveshare 7" HDMI display for the driver's dashboard view
-
-This is a first-party Raspberry Pi camera feeding directly into a Pi 4B over CSI which is the lowest-latency path available through the Pi GPU. We chose this architecture specifically because Pi's open-source camera stack (libcamera) gave us the best combination of performance, documentation, and reliability for a safety-critical embedded application. For a team of student engineers, that software ecosystem made all the difference.
-
-What We Are Requesting:
-We would love Canakit's support in the form of:
-• 1x Raspberry Pi Camera Module 3 - Wide Angle
-• 1x Raspberry Pi 4B (or access to educational/team pricing)
-
-If a full product sponsorship isn't possible, we would also greatly appreciate educational pricing, a discount, or any level of support for our university team.
-
-How We Will Promote Canakit:
-• Canakit logo placement on our solar car body, visible in all race media and photography
-• Branding on team apparel worn by 15+ members throughout the competition
-• Social media content and race-day coverage showcasing hardware provided by Canakit in a real-world embedded system on a solar-powered vehicle
-• A technical write-up documenting the full Pi Camera 3 Wide → CSI → Pi 4B → HDMI pipeline, shareable with your developer and education community
-• Exposure at a national-level STEM competition with strong engineering community reach
-
-We admire CanaKit's role in making Raspberry Pi hardware readily available to developers and students. We would love the opportunity to represent CanaKit at ASC 2026.
-
-Thank you for your time and consideration.
-
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
-  <!-- Insta360 -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-insta360')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Insta360</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">X5 + camera consultation</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">insta360.com/contact + Think Bold Fund</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$550</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-insta360" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)</div>
-      <div class="email-body">Dear Insta360 Partnerships Team,
- 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for camera systems on NUSolar, our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 — a cross-country solar-powered car race that draws top engineering programs from across the country and generates significant media coverage.
- 
-We have two camera needs for our car, and I'd love to explore whether Insta360 could help with either or both:
- 
-1. Real-time rear-vision safety system — Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate, and strong dynamic range. I've been looking at your product lineup and would welcome your team's input on whether any Insta360 cameras — such as the Ace Pro 2, Link series, or another product — could support real-time, low-latency video output for this kind of embedded application.
- 
-2. Race-day 360° content — Separately, we'd love to mount an X5 on the car to capture immersive footage during the race. A solar car crossing the country feels like a natural fit for the kind of content Insta360 is known for, and we'd be excited to share it across our social media channels.
- 
-We're reaching out to see if Insta360 would be open to supporting our team through a product sponsorship. If a full sponsorship isn't possible, we would also greatly appreciate a discounted partnership or any level of product support. In return, we can offer:
- 
-• Insta360 logo placement on the solar car body (visible in all race media)
-• Branding on team t-shirts and pit crew apparel
-• Social media posts and race-day content featuring Insta360 products
-• Exposure at a national-level STEM competition with strong engineering community reach
- 
-Even if the rear-vision application isn't a fit for your current lineup, we'd still love to partner on the content side. Would someone on your team be available to discuss this?
- 
-Thank you for your time.
- 
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
- 
-  <!-- ELP Lizzy Liu -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-elp1')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Ms. Lizzy Liu)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@elpcctv.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-elp1" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026</div>
-      <div class="email-body">Dear Ms. Liu,
- 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between ELP and NUSolar, our university's solar car racing team.
- 
-I have been following ELP's advancements in high-speed USB camera modules, particularly the OV4689-based boards, and believe our upcoming project is the perfect platform to showcase your technology in a real-world embedded engineering application.
- 
-About the Project:
-NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 which is a national cross-country solar-powered car race. Our system requires a USB camera with 60+ fps at 1080p, wide-angle FOV with no distortion, low latency, and compatibility with a Raspberry Pi 4B. After looking through your products, we've found the ELP-USBFHD08S-LC1100 (100° no-distortion lens) as the best technical fit for our application. Its ~85° horizontal FOV, distortion-free image, and high frame rate meet all of our competition safety regulations.
- 
-How We Will Promote ELP:
-• Featuring the ELP camera in race-day social media content with direct links to your product pages
-• Showcasing the camera's performance in a real-time embedded vision system on a solar-powered vehicle
-• ELP logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting how ELP hardware was integrated into our system, shareable by your team for marketing
- 
-What We Are Requesting:
-We are looking for sponsorship in the form of 1–2x ELP-USBFHD08S-LC1100 camera modules (OV4689, 100° no-distortion lens) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
- 
-We admire ELP's commitment to providing cost-effective, high-quality USB camera solutions for embedded and industrial applications, and would be honored to partner together. Thank you for considering this proposal.
- 
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
- 
-  <!-- ELP Sales Team -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-elp2')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">ELP (Sales Team)</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">ELP-USBFHD08S-LC1100 (OV4689, 100° ND)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">ailipu_sales5@elpcctv.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-elp2" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x ELP USB Cameras — American Solar Challenge 2026</div>
-      <div class="email-body">Dear ELP Sales Team,
- 
-[Same content as Ms. Lizzy Liu email above, addressed to "Dear ELP Sales Team" instead]</div>
-    </div>
-  </div>
- 
-  <!-- Arducam -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-arducam')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Arducam</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">B0497 (IMX678 STARVIS 2, USB 3.0, 100°D)</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">support@arducam.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$70-80</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-arducam" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x Arducam — Raspberry Pi Rear-Vision System for ASC 2026</div>
-      <div class="email-body">Dear Arducam Team,
- 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Arducam and NUSolar, our university's solar car racing team.
- 
-Arducam's focus on Raspberry Pi-compatible embedded camera solutions is a natural fit for our project, and I believe this is a great opportunity to showcase your technology in a real-world engineering application.
- 
-About the Project:
-NUSolar is building a real-time rear-vision camera system for our solar car ahead of the American Solar Challenge 2026 — a national cross-country solar-powered car race. The system requires:
- 
-• 60+ fps at 1080p for smooth real-time video
-• Wide-angle FOV (≥60° horizontal) to meet competition safety regulations
-• Strong low-light and wide dynamic range performance for varying outdoor conditions
-• USB interface compatible with Raspberry Pi 4B (3m cable run rules out CSI)
-• Compact form factor for rear-vehicle mounting
- 
-After evaluating your product line, we've identified the Arducam B0497 (8.3MP IMX678 STARVIS 2 USB 3.0 camera module with 100°D M12 lens) as a strong candidate. Its STARVIS 2 sensor, wide-angle lens, USB 3.0 high-speed connectivity, and Pi compatibility align well with our requirements. I'd welcome your team's input on whether the B0497 can sustain 60fps at 1080p, and whether you'd recommend a different model if it's a better fit for a real-time, low-latency video application.
- 
-How We Will Promote Arducam:
-• Featuring the Arducam camera in race-day social media content with links to your product pages
-• Showcasing Arducam hardware in a Pi-based embedded vision system on a solar-powered vehicle
-• Arducam logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting how Arducam hardware was integrated into our Pi 4B system, shareable for your marketing and developer community
- 
-What We Are Requesting:
-We are looking for sponsorship in the form of 1–2x Arducam B0497 camera modules (or a similar recommended product) to complete this safety-critical system. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
- 
-We admire Arducam's commitment to the Raspberry Pi and embedded vision community, and would be honored to partner together. Thank you for considering this proposal.
- 
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
- 
-  <!-- Waveshare -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-waveshare')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">Waveshare</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">7" HDMI LCD (H) w/ case (1024×600 IPS)</div><div style="margin-top:6px;">
-      </div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">sales@waveshare.com</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$50-55</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-waveshare" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Proposal: NUSolar x Waveshare Display — Raspberry Pi Rear-Vision System for ASC 2026</div>
-      <div class="email-body">Dear Waveshare Sales Team,
- 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I am writing to propose a partnership between Waveshare and NUSolar, our university's solar car racing team.
- 
-Waveshare's reputation for high-quality Raspberry Pi displays and commitment to the developer community make this a natural fit for our project.
- 
-About the Project:
-NUSolar is building a real-time rear-vision camera and display system for our solar car ahead of the American Solar Challenge 2026 — a national cross-country solar-powered car race. The system pairs a USB camera with a Raspberry Pi 4B, which outputs the live rear-view feed over HDMI to a dashboard-mounted display for the driver.
- 
-Our display requirements:
-• 7" HDMI IPS panel for wide viewing angles (driver must see screen from normal seating position per competition regulation 9.7.E.3)
-• Rigid, durable construction for vehicle mounting — must withstand road vibration without shifting (competition regulation 9.7.E.2)
-• 1024×600 or higher resolution for clear image detail
-• 5V power input compatible with Raspberry Pi 4B
-• Pi 4B driver-free compatibility
- 
-After evaluating your product line, we've identified the Waveshare 7inch HDMI LCD (H) with case as the best fit. Its IPS panel, toughened glass (6H hardness), rigid case, and driver-free Pi 4B compatibility meet all of our competition and vehicle requirements.
- 
-How We Will Promote Waveshare:
-• Featuring the Waveshare display in race-day social media content with links to your product pages
-• Showcasing Waveshare hardware as the driver's real-time rearview display on a solar-powered vehicle
-• Waveshare logo placement on the solar car body and team apparel, visible in all race media coverage
-• Technical write-up documenting the Pi 4B + Waveshare display integration, shareable for your developer community and marketing
- 
-What We Are Requesting:
-We are looking for sponsorship in the form of 1x Waveshare 7inch HDMI LCD (H) with case (1024×600, IPS, toughened glass) to serve as the driver's rear-vision display. If a full product sponsorship isn't possible, we would also appreciate a discounted price or any level of product support for our university team.
- 
-We admire Waveshare's commitment to making innovation easier for developers and engineers, and would be honored to partner together. Thank you for considering this proposal.
- 
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
- 
-  <!-- GoPro -->
-  <div class="card sponsor-toggle" onclick="toggleEmail('email-gopro')">
-    <div class="sponsor-card"><div><div style="font-size:13px;font-weight:600">GoPro</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Hero 13 Black + Media Mod</div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-family:monospace">gopro.com/connect + gopro.com/sponsorship</div><div class="sponsor-expand-hint">▸ Click to view email</div></div><div style="text-align:right"><div class="sponsor-value">$480</div><span class="verdict v-sent">SENT</span></div></div>
-    <div id="email-gopro" class="sponsor-details">
-      <div class="email-sent-date">Sent: March 26, 2026 at 8:00 AM Central</div>
-      <div class="email-subject">Subject: Sponsorship Inquiry — Northwestern University Solar Car Team (ASC 2026)</div>
-      <div class="email-body">Dear GoPro Partnerships Team,
- 
-My name is Spencer Kogoma, and I'm a Computer Engineering student at Northwestern University. I'm the project lead for the camera systems on NUSolar, our university's solar car racing team. We're currently building our vehicle for the American Solar Challenge 2026 — a cross-country solar-powered car race that brings together top engineering programs from across the country and generates significant media coverage.
- 
-We have two camera needs for our car, and I'd love to explore whether GoPro could help with either or both:
- 
-1. Real-time rear-vision safety system — Competition regulations require a continuous, always-on, low-latency rear-view feed for the driver. We need wide FOV (≥60°), high frame rate (60 fps), and reliable HDMI output. After researching GoPro's product line, the Hero 13 Black stands out — its 1080p@60fps HDMI output in idle/preview mode with low latency (stabilization off) is well-suited for a real-time rear-view application. We would also need a Media Mod for HDMI access. I'd welcome your team's input on whether this use case is a good fit for the Hero 13 or if you'd recommend a different model.
- 
-2. Race-day content — A GoPro mounted on a solar car racing across the country is exactly the kind of adventure content GoPro is known for. We'd love to capture and share action footage throughout the competition on our social media channels.
- 
-We're reaching out to see if GoPro would be open to supporting our team through a product sponsorship. If a full sponsorship isn't possible, we would also greatly appreciate a discounted partnership, student pricing, or any level of product support. In return, we can offer:
- 
-• GoPro logo placement on the solar car body (visible in all race media)
-• Branding on team t-shirts and pit crew apparel
-• Social media posts and race-day content captured with GoPro
-• Exposure at a national-level STEM competition with strong engineering community reach
- 
-Would someone on your team be available to discuss this?
- 
-Thank you for your time.
- 
-Best regards,
-Spencer Kogoma</div>
-    </div>
-  </div>
- 
-  <h2>Pre-Send Checklist</h2>
   <div class="card">
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">Send from school email</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">CC solar@u.northwestern.edu on ALL emails</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">All emails include "sponsorship or discount" fallback language</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">All emails specify exact product models verified against regs</span></div>
-    <div class="check-item"><div class="checkbox done">✓</div><span style="font-size:11px;color:var(--text-muted)">Insta360: also apply to Think Bold Fund (+ Dillo Day content angle)</span></div>
+    <p><strong>Privacy update:</strong> Full email bodies, recipient addresses, and expandable email previews were removed from this dashboard. The sponsorship section now only shows company, requested item, estimated value, and response outcome.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">Raspberry Pi Foundation</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Camera Module 3 Wide + Pi 4B</div>
+        <div class="sponsor-status-note">Response received. Sponsorship confirmed.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$85</div>
+        <span class="verdict v-sponsored">SPONSORED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">Waveshare</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">7&quot; HDMI LCD (H) w/ case</div>
+        <div class="sponsor-status-note">Response received. Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$50-55</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">Adafruit Industries</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Camera Module 3 Wide + Pi 4B</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$85</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">SparkFun Electronics</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Camera Module 3 Wide + Pi 4B</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$85</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">CanaKit</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Camera Module 3 Wide + Pi 4B</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$85</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">Insta360</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">X5 + camera consultation</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$550</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">ELP</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">ELP-USBFHD08S-LC1100 camera module</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$70</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">Arducam</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">B0497 IMX678 STARVIS 2 USB 3.0 camera</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$70-80</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+
+    <div class="card sponsor-card sponsor-static">
+      <div>
+        <div style="font-size:15px;font-weight:850;color:var(--text)">GoPro</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Hero 13 Black + Media Mod</div>
+        <div class="sponsor-status-note">Sponsorship declined.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="sponsor-value">$480</div>
+        <span class="verdict v-declined">DECLINED</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Sponsorship Summary</h2>
+  <div class="bottom-line">
+    <p><strong>Outcome:</strong> Raspberry Pi responded and provided sponsorship support for the rear-vision system. Waveshare also responded but declined sponsorship. All other outreach targets are recorded as declined.</p>
   </div>
 </div>
-
-<!-- ═══ OPEN ITEMS TAB ═══ -->
-<div id="unknowns" class="tab-content">
-  <h2>Still Need To Find Out</h2>
-  <div class="card finding" style="border-color:#3fb950"><div class="finding-title" style="color:#3fb950">★ Pi Camera Module 3 Wide + CSI Extender is the top recommendation</div><div class="finding-desc">Official Raspberry Pi camera with 12MP IMX708 sensor, 120° wide FOV (~104° horizontal), HDR mode, autofocus, and CSI interface (lowest latency path to Pi GPU). Arducam CSI-to-HDMI extension kit ($15) solves the 3m cable run. Total system cost: ~$108. Best value, best latency, best software support.</div></div>
-  <div class="card finding" style="border-color:#ffcc00"><div class="finding-title" style="color:#ffcc00">ELP & Arducam USB cameras are strong alternatives</div><div class="finding-desc">Both meet all regs, work with Pi 4B, achievable in 3 weeks. ELP OV4689 has proven 60fps@1080p reliability. Arducam B0497 has the best sensor (STARVIS 2) for low-light. Good fallbacks if CSI extender has EMI issues in the motor bay.</div></div>
-  <div class="card finding" style="border-color:#94a3b8"><div class="finding-title" style="color:#94a3b8">AHD kit is a good fallback option</div><div class="finding-desc">Cheapest, lowest latency, purpose-built for vehicles. But limited quality improvement over what the team has used before.</div></div>
-  <div class="card finding" style="border-color:#ef4444"><div class="finding-title" style="color:#ef4444">GoPro is viable if sponsored</div><div class="finding-desc">Hero 13 HDMI output checks out (1080p60, 2-3 frame delay with stabilization off). But needs Media Mod ($80 extra) and too expensive without sponsorship.</div></div>
-  <div class="card finding" style="border-color:#64748b"><div class="finding-title" style="color:#64748b">Insta360 X5 is not viable for rear-view</div><div class="finding-desc">Webcam mode = 30fps with stitching latency. HDMI requires manual menu navigation (violates always-on reg). Pursue for content creation only.</div></div>
-  
-  <h2>Decisions Still Needed</h2>
-  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Final camera selection (pending Shannon review of options)</span></div>
-  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Whether to use Pi in the pipeline or go direct camera-to-display</span></div>
-  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Display: Waveshare 7" or something the team already has?</span></div>
-  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Mount design for rear of car (need to see the car first)</span></div>
-  <div class="card decision"><span class="decision-q">?</span><span style="font-size:11px;color:var(--text-muted)">Whether FPGA upgrade path is worth documenting in detail</span></div>
-</div>
-
 
 <!-- Footer -->
-<div class="footer">NUSolar Rear Vision System · Spencer Kogoma · Last Updated: April 8, 2026 · Week 2 Checkpoint</div>
+<div class="footer">NUSolar Rear Vision System · Spencer Kogoma · Last Updated: May 15, 2026 · Week 3 Build Phase</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Tab switching
@@ -904,14 +631,6 @@ function showTab(id, btn) {
 }
 
 // Sponsor email dropdown toggle
-function toggleEmail(id) {
-  const el = document.getElementById(id);
-  const isActive = el.classList.contains('active');
-  // Close all others first
-  document.querySelectorAll('.sponsor-details').forEach(d => d.classList.remove('active'));
-  // Toggle this one
-  if (!isActive) el.classList.add('active');
-}
 
 // Radar Chart
 let radarInit = false;
